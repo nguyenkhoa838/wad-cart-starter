@@ -6,7 +6,7 @@
 
 - `README.md` là đặc tả chức năng của starter; rubric IA#1 quy định tiêu chí chấm và sản phẩm nộp. Rubric và template PDF hiện ở thư mục cha của repo; nếu checkout khác thiếu tài liệu nguồn, ghi rõ giới hạn thay vì suy đoán nội dung.
 - Contract tại mục 3 là yêu cầu chức năng. Node `24.x`, style, không dùng devDependencies và thiết kế checker tại đây là lựa chọn của repo/brief harness; không trình bày chúng như yêu cầu nguyên văn của rubric.
-- `BRIEF_HARNESS.md` mô tả phương án dựng harness. Trạng thái “bản nháp chờ review” không tự cấp quyền triển khai toàn bộ harness, cũng không phủ nhận phần việc sinh viên đã giao hoặc chấp thuận trong phiên làm việc. Dùng yêu cầu hiện tại cùng các chấp thuận còn hiệu lực để xác định phạm vi.
+- `BRIEF.md` là brief duy nhất, mô tả hàm/tests và harness. Dùng yêu cầu hiện tại cùng các chấp thuận còn hiệu lực để xác định phạm vi; brief không tự cấp quyền triển khai phần chưa được giao.
 - Đối chiếu `package.json`, source và test thực tế trước khi dùng lệnh hoặc mô tả trạng thái. Không coi kế hoạch trong tài liệu là tính năng đã có.
 - Nếu có mâu thuẫn ảnh hưởng kết quả, chỉ rõ nguồn và điểm mâu thuẫn; tiếp tục phần độc lập, chỉ hỏi lại phần chưa đủ thông tin để quyết định.
 - Bài này là một hàm JavaScript và harness kiểm chứng. Không bổ sung giao diện, server, database, framework hoặc chức năng giỏ hàng khác.
@@ -21,8 +21,8 @@
 | Hàm cần triển khai | Named export `cartTotal(items, options)` trong `src/cart.js`. |
 | Tests | `test/cart.test.js`, dùng `node:test` và `node:assert/strict`. |
 | Rules | `AGENTS.md` tại root repo. |
-| Harness | `scripts/check-format.js`, scripts trong `package.json`, `.github/workflows/ci.yml`; trạng thái kiểm chứng lưu trong evidence. |
-| Hồ sơ bài | Brief, `AI-LOG.md`, `SELF_ASSESSMENT_EVIDENCE.md`, `SELF_ASSESSMENT_REPORT.md`, `REPOSITORY_LINK.md`. |
+| Harness | `scripts/check-format.js`, scripts trong `package.json`, `.github/workflows/ci.yml`; trạng thái kiểm chứng lưu trong `README.md` và `AI-LOG.md`. |
+| Hồ sơ bài | `BRIEF.md`, `AI-LOG.md`; `SELF_ASSESSMENT_REPORT.md` được tạo khi giao bước báo cáo nộp. |
 
 Không tạo lockfile hoặc chạy `npm install`, `npm ci`, `npx` để kéo thêm công cụ cho bài không có package phụ thuộc. Giữ tên hàm, đường dẫn import và metadata starter, trừ phần thay đổi được task yêu cầu.
 
@@ -122,7 +122,7 @@ Chạy lệnh từ root `wad-cart-starter`, không từ thư mục cha chứa PD
 
 ## 7. Quy tắc dựng và bảo trì harness
 
-Phần này quy định thiết kế và cách bảo trì harness. Checker, scripts và workflow đã được tạo; kết quả kiểm chứng và giới hạn CI phải đọc từ `SELF_ASSESSMENT_EVIDENCE.md`, không suy ra từ việc các file tồn tại.
+Phần này quy định thiết kế và cách bảo trì harness. Checker, scripts và workflow đã được tạo; kết quả kiểm chứng và giới hạn CI phải đọc từ `README.md` và `AI-LOG.md`, không suy ra từ việc các file tồn tại.
 
 ### Format checker
 
@@ -150,16 +150,16 @@ Phần này quy định thiết kế và cách bảo trì harness. Checker, scri
 2. Xác định phạm vi: rules, harness hay hàm/tests. Nếu chỉ được giao rules thì tạo rules và cập nhật hồ sơ liên quan; không coi đó là giao toàn bộ bài.
 3. Với task triển khai, lưu brief thực tế trước khi code: mục tiêu, file được sửa, contract/errors, ràng buộc và cách kiểm chứng. Không viết brief sau rồi nói đó là prompt đã dùng từ đầu.
 4. Sửa đúng file cần thiết, đọc diff, chạy checks phù hợp và sửa lỗi thuộc phạm vi task.
-5. Cập nhật AI log và evidence trung thực; bàn giao file đã sửa, kết quả kiểm chứng và phần còn thiếu.
+5. Cập nhật AI log và trạng thái README trung thực; bàn giao file đã sửa, kết quả kiểm chứng và phần còn thiếu.
 
 Không cần xin lại xác nhận cho công việc đã được giao rõ. Nếu task chỉ là tài liệu, không tự commit/push, đổi remote, tạo branch hoặc triển khai các phần khác. Khi được giao commit/push, giữ thay đổi của task riêng biệt và push vào `origin` là fork cá nhân; không push vào `upstream` của giảng viên.
 
 ## 9. AI log và bằng chứng tự đánh giá
 
 - Ghi `AI-LOG.md` trong quá trình task hoặc ngay sau mốc vừa hoàn thành; một entry cho mỗi task có sử dụng AI, giữ entry cũ và sáu trường `Tool`, `Asked for`, `Kept`, `Changed`, `Rejected`, `By hand`. Không đợi hoàn thành toàn bài rồi dựng lại nhật ký.
-- `Asked for` tóm tắt task trong một câu; các trường khác ngắn nhưng cụ thể, đối chiếu được với thay đổi thực tế. Chi tiết lệnh, commit và CI run lưu trong `SELF_ASSESSMENT_EVIDENCE.md`.
+- `Asked for` tóm tắt task trong một câu; các trường khác ngắn nhưng cụ thể, đối chiếu được với thay đổi thực tế. Lệnh kiểm chứng và CI run cần thiết lưu trong `README.md`; dẫn chiếu file/test/commit thực tế trong báo cáo khi được giao bước tự đánh giá.
 - Không bịa phần sinh viên tự viết, nội dung bị loại, hoạt động review, test pass hoặc commit. Chưa có hoạt động thì ghi đúng là chưa ghi nhận.
-- Phân biệt baseline lịch sử, kết quả mới và công việc dự kiến. Cập nhật trạng thái hiện tại trong evidence khi thêm sản phẩm; giữ mốc cũ có ngữ cảnh.
+- Phân biệt baseline lịch sử, kết quả mới và công việc dự kiến. Cập nhật trạng thái hiện tại trong README khi thêm sản phẩm; giữ mốc cũ có ngữ cảnh trong AI log và lịch sử Git.
 - Khi được giao báo cáo nộp, tạo `SELF_ASSESSMENT_REPORT.md` theo template và đặt ở root zip: MSSV/họ tên thật, tổng điểm, bảng bốn cột `Criterion`, `Max`, `I claim`, `Evidence`; đủ 5 tiêu chí với Max `30/20/20/15/15`, evidence cụ thể, `What I did not manage`, `What I would do differently`.
 - Không bịa danh tính, deadline hoặc CI URL. Điểm tự nhận, kể cả điểm tối đa, phải dựa trên rubric và evidence; không tự chấm 100 chỉ vì tests xanh. Tổng trong bảng, tổng tự nhận và tên zip `<StudentID>_<total>.zip` phải khớp khi đóng gói bài.
 - Sinh viên cần giải thích được công thức, điều kiện biên, tests và gate. Ưu tiên cách viết dễ đọc, không thêm kỹ thuật khó giải thích khi bài không cần.

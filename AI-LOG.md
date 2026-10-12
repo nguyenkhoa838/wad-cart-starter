@@ -1,138 +1,149 @@
-# AI-LOG.md - IA#1: cartTotal with a harness
+# AI-LOG — IA#1: cartTotal with a harness
 
-Theo template CSC13008. Chỉnh sửa do Codex thực hiện; `By hand` ghi yêu cầu/quyết định của sinh viên, chưa ghi nhận code tự viết. Chi tiết kiểm chứng ở `SELF_ASSESSMENT_EVIDENCE.md`.
+`BRIEF.md` là bản tổng hợp ngày 12/10/2026 từ các brief đã dùng ở các bước
+harness và triển khai. Tên file cũ trong những entry dưới đây phản ánh lịch sử;
+bản gốc vẫn tra được trong Git, dù các file phụ đã được bỏ khỏi repo hiện tại.
 
-## 2026-10-12 — Đối chiếu yêu cầu IA#1 và kiểm chứng starter
+## 2026-10-12 — Phân tích yêu cầu
 
-Tool: OpenAI Codex.
-Asked for: Phân tích yêu cầu, rubric và starter.
-Kept: Contract, ma trận test dự kiến và checklist nộp bài.
-Changed: Đối chiếu template PDF và tạo AI log.
-Rejected: Chưa ghi nhận.
-By hand: Chưa ghi nhận.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Đối chiếu đề, rubric và starter.
+- **Kept:** Contract, ma trận test và checklist nộp bài.
+- **Changed:** Đối chiếu template PDF, tạo AI log.
+- **Rejected:** Chưa ghi nhận.
+- **By hand:** Review yêu cầu, contract và checklist nộp bài.
 
-## 2026-10-12 — Chuẩn bị repo GitHub cá nhân
+## 2026-10-12 — Chuẩn bị repo
 
-Tool: OpenAI Codex, Git, GitHub API.
-Asked for: Tạo fork và kết nối repo local.
-Kept: Fork `nguyenkhoa838/wad-cart-starter`, main và lịch sử starter.
-Changed: Cấu hình origin/upstream/tracking; thêm `REPOSITORY_LINK.md`.
-Rejected: Chưa ghi nhận.
-By hand: Chưa ghi nhận.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Tạo fork, kết nối repo local.
+- **Kept:** Fork cá nhân, nhánh main và lịch sử starter.
+- **Changed:** Cấu hình remotes/tracking, thêm `REPOSITORY_LINK.md`.
+- **Rejected:** Chưa ghi nhận.
+- **By hand:** Review link fork và cấu hình repo.
 
-## 2026-10-12 — Chạy npm test và ghi nhận trạng thái ban đầu
+## 2026-10-12 — Chạy test ban đầu
 
-Tool: OpenAI Codex, Node.js, npm.
-Asked for: Chạy test để xác lập baseline.
-Kept: 1 test fail do `Error: not implemented`.
-Changed: Ghi baseline; source/tests giữ nguyên.
-Rejected: Chưa ghi nhận.
-By hand: Chưa ghi nhận.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Chạy `npm test` để xác lập baseline.
+- **Kept:** 1 test fail do `Error: not implemented`.
+- **Changed:** Lưu baseline; source/tests giữ nguyên.
+- **Rejected:** Chưa ghi nhận.
+- **By hand:** Review kết quả test và nguyên nhân lỗi ban đầu.
 
-## 2026-10-12 — Rút gọn AI log và lưu bằng chứng tự đánh giá
+## 2026-10-12 — Chuẩn hóa log và evidence
 
-Tool: OpenAI Codex, Git.
-Asked for: Chuẩn hóa log và tách bằng chứng.
-Kept: Sáu trường template và evidence riêng.
-Changed: Tóm tắt yêu cầu, chuyển chi tiết kiểm chứng sang evidence.
-Rejected: Chép nguyên văn yêu cầu và đặt mục bằng chứng trong log.
-By hand: Chọn cách tóm tắt và tách bằng chứng.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Rút gọn log, tách bằng chứng.
+- **Kept:** Sáu trường template và file evidence riêng.
+- **Changed:** Chuyển chi tiết kiểm chứng sang evidence.
+- **Rejected:** Chép nguyên yêu cầu và bằng chứng dài vào log vì thiếu trọng tâm.
+- **By hand:** Review nội dung log và cách tách evidence.
 
-## 2026-10-12 — Soạn brief dựng harness để review
+## 2026-10-12 — Soạn brief harness
 
-Tool: OpenAI Codex, công cụ PDF, trình duyệt.
-Asked for: Soạn brief harness ngắn, đúng phạm vi.
-Kept: `BRIEF_HARNESS.md` với scope, contract, no dependencies, gate/CI; lúc này còn chờ review.
-Changed: Rút brief từ khoảng 120 xuống 51 dòng; lưu nguồn trong evidence.
-Rejected: Diễn giải dài và lặp theo yêu cầu sinh viên.
-By hand: Xác định phạm vi và yêu cầu brief ngắn.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Soạn brief ngắn để review.
+- **Kept:** `BRIEF_HARNESS.md`: scope, contract, no dependencies, gate/CI.
+- **Changed:** Rút khoảng 120 xuống 51 dòng; giữ dạng brief nháp.
+- **Rejected:** Diễn giải dài, lặp ý.
+- **By hand:** Review bản nháp brief và phạm vi harness.
 
-## 2026-10-12 — Viết rules chi tiết cho repository
+## 2026-10-12 — Viết rules
 
-Tool: OpenAI Codex, Git.
-Asked for: Viết rules cụ thể cho IA#1.
-Kept: `AGENTS.md`: stack, contract, style, tests, commands và Never.
-Changed: Phân biệt lệnh hiện có/dự kiến và yêu cầu đề/quy ước repo.
-Rejected: Chưa ghi nhận.
-By hand: Yêu cầu rules chi tiết, đúng trọng tâm.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Viết rules cụ thể cho IA#1.
+- **Kept:** `AGENTS.md`: stack, contract, style, tests, commands, Never.
+- **Changed:** Tách yêu cầu đề khỏi quy ước repo; phân biệt lệnh có sẵn/dự kiến.
+- **Rejected:** Chưa ghi nhận.
+- **By hand:** Review rules về stack, style và Never.
 
-## 2026-10-12 — Review và chỉnh rules của repository
+## 2026-10-12 — Review rules
 
-Tool: OpenAI Codex, Git, công cụ PDF, Node.js.
-Asked for: Review tính đúng, đủ và nhất quán của rules.
-Kept: Contract, stack/style và harness không thêm package.
-Changed: Làm rõ qty lỗi, làm tròn sớm, checks, tự đánh giá và checker.
-Rejected: Codex bỏ diễn đạt “item thiếu field” quá rộng, cấm tự chấm 100 tuyệt đối và điều kiện kiểm chứng bị vòng lặp.
-By hand: Yêu cầu review kỹ; chưa ghi nhận nội dung tự viết.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Kiểm tra tính đúng, đủ và nhất quán.
+- **Kept:** Contract và harness không thêm package.
+- **Changed:** Làm rõ qty, làm tròn, checker và tự đánh giá.
+- **Rejected:** Mô tả thiếu field quá rộng, cấm tự chấm 100 tuyệt đối và điều kiện vòng lặp.
+- **By hand:** Review các quy tắc được sửa và mức phù hợp với đề.
 
-## 2026-10-12 — Phân tích bước dựng và kiểm chứng gate
+## 2026-10-12 — Phân tích gate
 
-Tool: OpenAI Codex, Git.
-Asked for: Giải thích bước dựng gate trước khi làm.
-Kept: Phạm vi checker/gate/CI và các tình huống pass/fail.
-Changed: Làm rõ gate đỏ do stub; chưa sửa file hoặc chạy tests.
-Rejected: Chưa ghi nhận.
-By hand: Yêu cầu phân tích trước triển khai.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Giải thích gate trước triển khai.
+- **Kept:** Phạm vi checker/gate/CI và các case pass/fail.
+- **Changed:** Làm rõ gate sẽ đỏ do stub; chưa triển khai.
+- **Rejected:** Chưa ghi nhận.
+- **By hand:** Review luồng gate và các case pass/fail.
 
-## 2026-10-12 — Review và dựng gate format, tests và CI
+## 2026-10-12 — Dựng harness
 
-Tool: OpenAI Codex, Node.js, npm, Git, web.
-Asked for: Review và dựng gate.
-Kept: Checker built-in, scripts/workflow; 42/42 tình huống đúng dự kiến.
-Changed: Chốt brief trước code, thêm harness và cập nhật commands/evidence; hàm/tests vẫn là starter.
-Rejected: Chưa ghi nhận sinh viên loại bỏ đầu ra.
-By hand: Giao review và dựng gate.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Review, dựng gate format/tests và CI.
+- **Kept:** Checker built-in, scripts/workflow; 42/42 case đúng dự kiến.
+- **Changed:** Chốt brief trước code, thêm harness; hàm/tests vẫn là starter.
+- **Rejected:** Chưa ghi nhận.
+- **By hand:** Review checker, scripts và workflow CI.
 
-## 2026-10-12 — Kiểm tra lại gate và chạy CI trên GitHub
+## 2026-10-12 — Kiểm chứng harness và CI
 
-Tool: OpenAI Codex, Node.js, npm, Git, GitHub.
-Asked for: Kiểm tra lại gate và chạy CI trên fork.
-Kept: 42/42 tình huống đúng dự kiến; CI đúng commit, format đạt, test fail do stub.
-Changed: Đối chiếu actions, commit/push harness; lưu SHA/run URL/log trong evidence.
-Rejected: Chưa ghi nhận; review không phát hiện lỗi gate cần sửa.
-By hand: Chọn thứ tự review gate rồi chạy CI.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Kiểm tra gate, chạy CI trên fork.
+- **Kept:** 42/42 case; CI đạt format, test fail do stub.
+- **Changed:** Review actions, commit/push harness, lưu bằng chứng CI.
+- **Rejected:** Chưa ghi nhận; review không phát hiện lỗi gate.
+- **By hand:** Review kết quả gate và trạng thái CI khi hàm còn stub.
 
-## 2026-10-12 — Chốt và review brief triển khai cartTotal/tests
+## 2026-10-12 — Chốt brief triển khai
 
-Tool: OpenAI Codex, Git, pypdf, Python Decimal.
-Asked for: Chốt và kiểm tra brief trước triển khai.
-Kept: `BRIEF_IMPLEMENTATION.md`; 13/13 expected trả số được tính lại đúng.
-Changed: Làm rõ input chưa đặc tả; thêm case chống hardcode, làm tròn sớm và input frozen vào kế hoạch tests.
-Rejected: Codex không thêm test `typeof` trùng strict equality hoặc validation/defaults ngoài đặc tả.
-By hand: Giao chốt brief và yêu cầu kiểm tra kỹ.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Chốt, review brief cho hàm và tests.
+- **Kept:** `BRIEF_IMPLEMENTATION.md`; kiểm lại 13/13 expected số.
+- **Changed:** Làm rõ input chưa đặc tả; thêm case chống hardcode, làm tròn sớm, input frozen.
+- **Rejected:** Test `typeof` trùng strict equality; validation/defaults ngoài đặc tả.
+- **By hand:** Review scope triển khai, contract và các case dự kiến.
 
-## 2026-10-12 — Rút gọn lời văn AI log
+## 2026-10-12 — Rút gọn lời văn log
 
-Tool: OpenAI Codex.
-Asked for: Viết AI log gọn lại.
-Kept: Các mốc cũ, sáu trường template và kết quả thực tế.
-Changed: Rút mỗi trường thành câu ngắn, bỏ diễn giải lặp và kiểm tra bố cục.
-Rejected: Câu dài và chi tiết đã có trong evidence.
-By hand: Yêu cầu rút gọn log.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Viết log ngắn hơn.
+- **Kept:** Các mốc cũ, sáu trường và kết quả thực tế.
+- **Changed:** Rút câu, bỏ ý lặp.
+- **Rejected:** Chi tiết dài đã có trong evidence.
+- **By hand:** Review lời văn và các ý cần giữ trong log.
 
-## 2026-10-12 — Lập plan, review và bổ sung test hành vi
+## 2026-10-12 — Lập plan và bổ sung tests
 
-Tool: OpenAI Codex, Node.js, npm, Git, BigInt.
-Asked for: Lập plan chi tiết, kiểm tra kỹ rồi bổ sung tests.
-Kept: `TEST_PLAN.md` và 47 tests; giữ ví dụ starter.
-Changed: Kiểm toán 22 expected, bổ sung case lỗi ở nhánh miễn ship sau probe; thêm 46 tests, QA tham chiếu 47/47 và phát hiện 46/46 biến thể lỗi; gate repo vẫn đỏ do stub.
-Rejected: Codex không áp đặt tests cho input chưa đặc tả hoặc dùng implementation làm oracle.
-By hand: Giao lập plan và review trước khi thực hiện; chưa ghi nhận code tự viết.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Lập plan, review rồi viết tests.
+- **Kept:** `TEST_PLAN.md`, 47 tests gồm ví dụ starter.
+- **Changed:** Kiểm 22 expected, thêm 46 tests và case lỗi khi miễn ship; QA 47/47, bắt 46/46 biến thể lỗi. Gate còn đỏ do stub.
+- **Rejected:** Tests ngoài đặc tả; dùng implementation làm expected.
+- **By hand:** Review các nhóm test và case biên.
 
 ## 2026-10-12 — Triển khai cartTotal
 
-Tool: OpenAI Codex, Node.js, npm, Git.
-Asked for: Triển khai hàm theo brief và bộ tests đã review.
-Kept: Hàm thuần đúng contract, nguyên bộ 47 tests và harness.
-Changed: Thay stub, cập nhật README/brief/evidence; gate local đạt format và 47/47 tests.
-Rejected: Chưa ghi nhận.
-By hand: Giao triển khai hàm; chưa ghi nhận code tự viết.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Viết hàm theo brief và tests đã review.
+- **Kept:** Hàm thuần đúng contract, 47 tests và harness.
+- **Changed:** Thay stub, cập nhật hồ sơ; gate local đạt format và 47/47 tests.
+- **Rejected:** Chưa ghi nhận.
+- **By hand:** Review công thức, điều kiện miễn ship và xử lý lỗi.
 
-## 2026-10-12 — Review hàm, commit và xác minh CI
+## 2026-10-12 — Review hàm và xác minh CI
 
-Tool: OpenAI Codex, Node.js, npm, Git, GitHub API.
-Asked for: Review lại hàm, sửa lỗi nếu có, chạy gate, commit và xác nhận CI xanh.
-Kept: Hàm đúng contract, nguyên bộ 47 tests và harness; review không phát hiện lỗi cần sửa.
-Changed: Commit/push implementation và hồ sơ lên fork; xác minh SHA/job/log CI xanh, format đạt và 47/47 tests pass; lưu bằng chứng trong README/evidence.
-Rejected: Chưa ghi nhận.
-By hand: Giao review, commit và xác nhận CI; chưa ghi nhận code tự viết.
+- **Tool:** OpenAI Codex.
+- **Asked for:** Review hàm, chạy gate, commit/push và kiểm tra CI.
+- **Kept:** Hàm, 47 tests và harness; review không phát hiện lỗi.
+- **Changed:** Push lên fork; xác minh CI đúng commit, đạt format và 47/47 tests.
+- **Rejected:** Chưa ghi nhận.
+- **By hand:** Review hàm và kết quả gate/CI.
+
+## 2026-10-12 — Tinh gọn repo và gộp brief
+
+- **Tool:** OpenAI Codex.
+- **Asked for:** Bỏ file phụ và chỉ giữ một brief đúng tiêu chí bài nộp, tham khảo hai mẫu của bạn.
+- **Kept:** Code, 47 tests, harness, README, rules và lịch sử log có sẵn.
+- **Changed:** Gộp thành `BRIEF.md`; bỏ hai brief cũ, `REPOSITORY_LINK.md`, `TEST_PLAN.md`, `SELF_ASSESSMENT_EVIDENCE.md`; sửa dẫn chiếu. Bản sao cũ lưu ngoài repo. `npm run check`: format đạt, 47/47 tests pass, exit `0`.
+- **Rejected:** Giữ nhiều brief hoặc đưa lịch sử triển khai/kết quả kiểm chứng vào brief giao việc.
+- **By hand:** Sinh viên yêu cầu tinh gọn repo và cung cấp hai brief tham khảo; chưa ghi nhận code tự viết trong bước này.

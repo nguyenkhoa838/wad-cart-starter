@@ -19,7 +19,7 @@ const standardOptions = Object.freeze({
   shipFee: 30000,
 })
 
-// Expected totals are literals checked independently in TEST_PLAN.md.
+// Expected totals are literals calculated independently from the contract.
 const numericCases = [
   {
     name: 'C02 an empty cart returns zero without shipping',

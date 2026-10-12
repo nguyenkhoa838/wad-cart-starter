@@ -66,7 +66,8 @@ One zip named `<StudentID>_<total>.zip` — the total being the mark you give
 yourself against the rubric — containing:
 
 1. This repository, with `npm test` green
-2. The brief you gave your assistant
+2. `BRIEF.md` — the brief you gave your assistant: scope, contract, error cases,
+   constraints, and acceptance checks
 3. `AI-LOG.md` — template on Classroom
 4. `SELF_ASSESSMENT_REPORT.md` — template on Classroom, one row per rubric
    criterion with evidence
