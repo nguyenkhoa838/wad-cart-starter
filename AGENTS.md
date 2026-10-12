@@ -1,174 +1,174 @@
 # Rules — IA#1: cartTotal with a harness
 
-Áp dụng cho toàn bộ repository. Mục tiêu là hoàn thành đúng bài cá nhân IA#1, giữ code dễ giải thích và có bằng chứng kiểm chứng thực tế. Khi thực hiện một task, chỉ làm phần đã được giao; không tự triển khai các phần còn lại của bài.
+These rules apply to the entire repository. The goal is to complete the individual IA#1 assignment correctly, keep the code easy to explain, and provide evidence of actual verification. For each task, perform only the assigned work; do not implement the remaining parts of the assignment on your own.
 
-## 1. Nguồn yêu cầu và phạm vi
+## 1. Requirements and scope
 
-- `README.md` là đặc tả chức năng của starter; rubric IA#1 quy định tiêu chí chấm và sản phẩm nộp. Rubric và template PDF hiện ở thư mục cha của repo; nếu checkout khác thiếu tài liệu nguồn, ghi rõ giới hạn thay vì suy đoán nội dung.
-- Contract tại mục 3 là yêu cầu chức năng. Node `24.x`, style, không dùng devDependencies và thiết kế checker tại đây là lựa chọn của repo/brief harness; không trình bày chúng như yêu cầu nguyên văn của rubric.
-- `BRIEF.md` là brief duy nhất, mô tả hàm/tests và harness. Dùng yêu cầu hiện tại cùng các chấp thuận còn hiệu lực để xác định phạm vi; brief không tự cấp quyền triển khai phần chưa được giao.
-- Đối chiếu `package.json`, source và test thực tế trước khi dùng lệnh hoặc mô tả trạng thái. Không coi kế hoạch trong tài liệu là tính năng đã có.
-- Nếu có mâu thuẫn ảnh hưởng kết quả, chỉ rõ nguồn và điểm mâu thuẫn; tiếp tục phần độc lập, chỉ hỏi lại phần chưa đủ thông tin để quyết định.
-- Bài này là một hàm JavaScript và harness kiểm chứng. Không bổ sung giao diện, server, database, framework hoặc chức năng giỏ hàng khác.
+- `README.md` is the starter's functional specification; the IA#1 rubric defines the grading criteria and deliverables. The rubric and template PDFs are currently in the repository's parent directory. If another checkout lacks these source documents, state the limitation instead of guessing their contents.
+- The contract in section 3 contains functional requirements. Node `24.x`, style conventions, the absence of devDependencies, and the checker design are choices made for this repository and its harness brief; do not present them as wording taken directly from the rubric.
+- `BRIEF.md` is the only brief and describes the function, tests, and harness. Use the current request and any existing authorization that still applies to determine scope; the brief does not authorize work that has not been assigned.
+- Check the actual `package.json`, source, and tests before using commands or describing the current state. Do not treat plans in documentation as existing features.
+- If conflicting requirements affect the result, identify the sources and the conflict. Continue independent work and ask for clarification only where there is not enough information to decide.
+- This assignment consists of one JavaScript function and a verification harness. Do not add a UI, server, database, framework, or other shopping-cart features.
 
-## 2. Stack và vị trí file
+## 2. Stack and file locations
 
-| Thành phần | Quy định |
+| Component | Rule |
 |---|---|
-| Runtime | Node.js `24.x`; dùng cùng major version ở local và CI. |
-| Ngôn ngữ | Plain JavaScript, ES modules; giữ `"type": "module"` trong `package.json`. |
-| Dependencies | Không thêm `dependencies` hoặc `devDependencies`; dùng Node built-in. |
-| Hàm cần triển khai | Named export `cartTotal(items, options)` trong `src/cart.js`. |
-| Tests | `test/cart.test.js`, dùng `node:test` và `node:assert/strict`. |
-| Rules | `AGENTS.md` tại root repo. |
-| Harness | `scripts/check-format.js`, scripts trong `package.json`, `.github/workflows/ci.yml`; trạng thái kiểm chứng lưu trong `README.md` và `AI-LOG.md`. |
-| Hồ sơ bài | `BRIEF.md`, `AI-LOG.md`; `SELF_ASSESSMENT_REPORT.md` được tạo khi giao bước báo cáo nộp. |
+| Runtime | Node.js `24.x`; use the same major version locally and in CI. |
+| Language | Plain JavaScript with ES modules; keep `"type": "module"` in `package.json`. |
+| Dependencies | Do not add `dependencies` or `devDependencies`; use Node built-in modules. |
+| Function to implement | Named export `cartTotal(items, options)` in `src/cart.js`. |
+| Tests | `test/cart.test.js`, using `node:test` and `node:assert/strict`. |
+| Rules | `AGENTS.md` at the repository root. |
+| Harness | `scripts/check-format.js`, scripts in `package.json`, and `.github/workflows/ci.yml`; record verification status in `README.md` and `AI-LOG.md`. |
+| Assignment documents | `BRIEF.md`, `AI-LOG.md`; create `SELF_ASSESSMENT_REPORT.md` when the submission-report task is assigned. |
 
-Không tạo lockfile hoặc chạy `npm install`, `npm ci`, `npx` để kéo thêm công cụ cho bài không có package phụ thuộc. Giữ tên hàm, đường dẫn import và metadata starter, trừ phần thay đổi được task yêu cầu.
+Do not create a lockfile or run `npm install`, `npm ci`, or `npx` to download tools for this assignment, which has no package dependencies. Keep the function name, import paths, and starter metadata unless the task requires a change.
 
-## 3. Contract bắt buộc của cartTotal
+## 3. Required cartTotal contract
 
 ```js
 cartTotal(items, options)
 // items: [{ name, price, qty }]
 // options: { vatRate, freeShipFrom, shipFee }
-// return: number, làm tròn đến đồng
+// return: number, rounded to the whole dong
 ```
 
-Với giỏ không rỗng và input hợp lệ:
+For a nonempty cart with valid input:
 
 ```text
-subtotal = tổng(price × qty)
+subtotal = sum(price × qty)
 vat = subtotal × vatRate
 shipping = subtotal >= freeShipFrom ? 0 : shipFee
 result = Math.round(subtotal + vat + shipping)
 ```
 
-- `vatRate: 0.08` nghĩa là 8%; không chia thêm cho 100.
-- So sánh ngưỡng ship bằng subtotal trước VAT và shipping. Đúng ngưỡng được miễn ship.
-- Chỉ làm tròn tổng cuối cùng; không làm tròn từng item, subtotal hoặc VAT trước khi cộng.
-- Trả về `number`; không trả object, chuỗi tiền tệ hoặc kết quả chuỗi của `toFixed(0)`.
-- `items: []` trả `0` ngay, không tính VAT/ship. Giỏ rỗng không cần đọc các trường options để thực hiện phép tính.
-- Bất kỳ item nào có `price < 0` phải làm hàm ném `RangeError`.
-- `qty` phải là số nguyên dương. Giá trị không thỏa điều kiện này phải làm hàm ném `RangeError`, kể cả `0`, số âm, số thập phân, chuỗi, `NaN`, `Infinity` hoặc `undefined` khi item thiếu `qty`. Không ép chuỗi thành số.
-- Kiểm tra mọi item; một item hợp lệ trước đó không được che lỗi ở item sau.
-- `price: 0` hợp lệ. Giỏ có item giá 0 vẫn là giỏ không rỗng và tính ship theo ngưỡng. Không dùng `subtotal === 0` để nhận diện giỏ rỗng.
-- Đề không bắt `price` là số nguyên; cho phép giá lẻ trong phạm vi input hợp lệ. `name` không tham gia công thức.
-- Ví dụ chuẩn: `180000 × 2 + 45000 × 1 = 405000`; VAT `32400`, ship `30000`, kết quả là số `467400`.
+- `vatRate: 0.08` means 8%; do not divide it by 100 again.
+- Compare the shipping threshold against the subtotal before VAT and shipping. Shipping is free exactly at the threshold.
+- Round only the final total; do not round individual items, the subtotal, or VAT before adding them.
+- Return a `number`; do not return an object, a currency string, or the string produced by `toFixed(0)`.
+- `items: []` returns `0` immediately, without VAT or shipping. An empty cart does not need to read the options fields to calculate the result.
+- Any item with `price < 0` must cause the function to throw `RangeError`.
+- `qty` must be a positive integer. Any value that fails this condition must cause the function to throw `RangeError`, including `0`, negative numbers, fractions, strings, `NaN`, `Infinity`, or `undefined` when an item has no `qty`. Do not coerce strings into numbers.
+- Check every item; an earlier valid item must not hide an error in a later item.
+- `price: 0` is valid. A cart containing a zero-price item is still nonempty and follows the shipping threshold rule. Do not use `subtotal === 0` to identify an empty cart.
+- The assignment does not require `price` to be an integer; fractional prices are allowed within valid input. `name` does not affect the formula.
+- Worked example: `180000 × 2 + 45000 × 1 = 405000`; VAT is `32400`, shipping is `30000`, and the result is the number `467400`.
 
-Ngoài quy tắc về `qty` ở trên, đề chưa quy định đầy đủ hành vi khi `items` không phải array, item không phải object, thiếu `price`/`name`, `price` là chuỗi/`NaN`/`Infinity`, options thiếu hoặc sai với giỏ không rỗng, rate/fee âm, hay tổng vượt giới hạn số an toàn. Không tự đặt defaults, ép kiểu, thêm validation hoặc error contract cho những trường hợp đó. Nếu task cần xử lý chúng, ghi giả định rõ trong brief trước khi triển khai; không trình bày giả định như yêu cầu chính thức.
+Apart from the `qty` rules above, the assignment does not fully specify behavior when `items` is not an array, an item is not an object, `price`/`name` is missing, `price` is a string/`NaN`/`Infinity`, options are missing or invalid for a nonempty cart, rates/fees are negative, or the total exceeds the safe integer limit. Do not invent defaults, coercion, validation, or an error contract for these cases. If a task requires handling them, document the assumptions in the brief before implementation; do not present assumptions as official requirements.
 
-## 4. Cách viết code và style
+## 4. Code design and style
 
-Các quy tắc thiết kế và style dưới đây là quy ước repo; tests kiểm hành vi, không bắt implementation phải có tên biến hoặc cấu trúc nội bộ cụ thể.
+The design and style rules below are repository conventions. Tests check behavior and must not require particular variable names or internal structures.
 
-- Giữ hàm thuần: không sửa `items`, item hoặc `options`; không I/O, gọi mạng, đọc biến môi trường, dùng thời gian hoặc trạng thái global để tính tổng.
-- Dùng biến local và luồng xử lý trực tiếp. Tránh class, abstraction hoặc helper chỉ để bọc một phép tính đơn giản.
-- Dùng `const` mặc định; dùng `let` khi biến cần gán lại. Đặt tên thể hiện vai trò như `subtotal`, `vat`, `shipping`.
-- Kiểm tra số nguyên bằng `Number.isInteger`; không dùng cách cắt phần thập phân để biến qty lỗi thành hợp lệ.
-- Thụt dòng bằng 2 spaces, không tab; dùng single quotes cho chuỗi JavaScript và không semicolon, theo starter.
-- Import theo ES modules, có phần mở rộng `.js` cho file local và tiền tố `node:` cho module built-in. JSON vẫn dùng double quotes đúng cú pháp.
-- Không có whitespace cuối dòng; file văn bản kết thúc bằng newline. Chấp nhận LF hoặc CRLF, không đổi toàn bộ line endings khi không cần thiết.
-- Giữ trailing comma ở cấu trúc nhiều dòng theo style đang có. Comment giải thích lý do hoặc điều kiện biên; không diễn giải lại từng phép cộng.
-- Thay đổi nhỏ, đúng mục tiêu; không reformat hàng loạt, đổi tên file hoặc sửa tài liệu không liên quan.
+- Keep the function pure: do not modify `items`, its objects, or `options`; do not use I/O, network calls, environment variables, time, or global state to calculate the total.
+- Use local variables and direct control flow. Avoid classes, abstractions, or helpers that merely wrap a simple calculation.
+- Use `const` by default and `let` when reassignment is needed. Use names that describe their roles, such as `subtotal`, `vat`, and `shipping`.
+- Check integers with `Number.isInteger`; do not truncate fractions to turn invalid quantities into valid ones.
+- Indent with 2 spaces and no tabs; use single quotes for JavaScript strings and no semicolons, following the starter.
+- Use ES module imports with the `.js` extension for local files and the `node:` prefix for built-in modules. JSON must still use double quotes as required by its syntax.
+- Do not leave trailing whitespace; text files must end with a newline. Accept LF or CRLF and avoid changing all line endings unnecessarily.
+- Keep trailing commas in multiline structures, following the existing style. Comments should explain reasons or edge cases rather than restating each addition.
+- Keep changes small and focused; do not reformat unrelated files, rename files, or edit unrelated documentation.
 
-## 5. Quy tắc kiểm thử
+## 5. Testing rules
 
-Giữ test ví dụ starter và expected `467400`. Mỗi test có một lý do thất bại rõ; tên test mô tả hành vi hoặc biên đang kiểm tra. Tính expected độc lập từ contract, không gọi lại helper của implementation để tạo expected.
+Keep the starter example test and its expected value of `467400`. Each test must have one clear reason to fail; its name should describe the behavior or boundary being checked. Calculate expected values independently from the contract; do not call implementation helpers to generate them.
 
-Khi được giao triển khai hàm/tests, bao phủ các trường hợp dưới đây. Cột “Căn cứ” phân biệt mức bao phủ nêu trực tiếp trong rubric với các biên bổ sung để kiểm chứng contract của repo.
+When assigned to implement the function or tests, cover the cases below. The “Basis” column distinguishes coverage stated directly in the rubric from additional boundaries used to verify this repository's contract.
 
-| Hành vi | Input/expected cần chứng minh | Căn cứ |
+| Behavior | Input/expected result to demonstrate | Basis |
 |---|---|---|
-| Ví dụ chuẩn | Hai item của starter → `467400`. | Rubric |
-| Giỏ rỗng | `[]` → số `0`, không cộng ship. | Rubric |
-| Đúng ngưỡng ship | Subtotal `500000`, VAT `0.08` → `540000`. | Rubric |
-| Giá âm | Ít nhất một item có `price: -1` → `RangeError`. | Rubric |
-| Qty thập phân | `qty: 1.5` → `RangeError`. | Rubric |
-| Qty bằng 0 hoặc âm | Tách trường hợp `qty: 0`, `qty: -1` → `RangeError`. | Contract số nguyên dương |
-| Hai phía sát ngưỡng | Subtotal `499999` → `569999`; `500001` → `540001`. | Biên bổ sung |
-| Ngưỡng xét trước VAT | Subtotal `490000`, VAT `0.08`, ship `30000` → `559200`. | Biên bổ sung |
-| Làm tròn và kiểu trả về | `price: 10`, `qty: 1`, VAT `0.08`, ship `0` → số `11`. | Kiểm chứng contract |
-| Chỉ làm tròn tổng cuối cùng | Hai item, mỗi item `price: 10.2`, `qty: 1`; VAT `0.5`, ship `0` → số `31`. | Bắt lỗi làm tròn sớm |
-| Giỏ không rỗng, giá bằng 0 | `price: 0`, ngưỡng `500000`, ship `30000` → `30000`. | Biên bổ sung |
+| Worked example | The starter's two items → `467400`. | Rubric |
+| Empty cart | `[]` → the number `0`, without shipping. | Rubric |
+| Exact shipping threshold | Subtotal `500000`, VAT `0.08` → `540000`. | Rubric |
+| Negative price | At least one item with `price: -1` → `RangeError`. | Rubric |
+| Fractional quantity | `qty: 1.5` → `RangeError`. | Rubric |
+| Zero or negative quantity | Separate cases for `qty: 0` and `qty: -1` → `RangeError`. | Positive-integer contract |
+| Immediately below and above the threshold | Subtotal `499999` → `569999`; `500001` → `540001`. | Additional boundaries |
+| Threshold checked before VAT | Subtotal `490000`, VAT `0.08`, shipping `30000` → `559200`. | Additional boundary |
+| Rounding and return type | `price: 10`, `qty: 1`, VAT `0.08`, shipping `0` → the number `11`. | Contract verification |
+| Round only the final total | Two items, each with `price: 10.2`, `qty: 1`; VAT `0.5`, shipping `0` → the number `31`. | Detects early rounding |
+| Nonempty cart with a zero price | `price: 0`, threshold `500000`, shipping `30000` → `30000`. | Additional boundary |
 
-Trừ dòng ghi khác, dùng `vatRate: 0.08`, `freeShipFrom: 500000`, `shipFee: 30000` và qty `1` cho các giá đơn. Dùng `assert.equal` cho kết quả và `assert.throws(..., RangeError)` cho loại lỗi; không ràng buộc nguyên văn message chưa được đề quy định.
+Unless a row states otherwise, use `vatRate: 0.08`, `freeShipFrom: 500000`, `shipFee: 30000`, and qty `1` for single-price cases. Use `assert.equal` for results and `assert.throws(..., RangeError)` for the error type; do not require exact error messages that the assignment has not specified.
 
-Bổ sung test item lỗi nằm sau item hợp lệ, VAT bằng 0 hoặc input không bị sửa khi cần kiểm chứng thiết kế. Không thêm test chỉ để kiểm chi tiết nội bộ, tăng số lượng hoặc áp đặt validation ngoài đặc tả. Không dùng snapshot, mock hay thư viện test mới cho hàm này.
+Add tests for an invalid item after a valid one, zero VAT, or unchanged input when needed to verify the design. Do not add tests merely to check internals, increase the test count, or impose validation beyond the specification. Do not use snapshots, mocks, or new testing libraries for this function.
 
-Case giá lẻ ở trên có subtotal `20.4`, VAT `10.2`, tổng `30.6` → `31`. Làm tròn từng item, subtotal hoặc VAT trước khi cộng có thể cho `30`; case `price: 10` đơn lẻ không bắt được những lỗi đó. Với hai phía ngưỡng hoặc nhiều qty lỗi, viết thành các test riêng để mỗi kết quả có một lý do thất bại rõ.
+The fractional-price case above has subtotal `20.4`, VAT `10.2`, and total `30.6` → `31`. Rounding individual items, the subtotal, or VAT before addition can produce `30`; the single-item `price: 10` case does not detect those errors. For both sides of the threshold or multiple invalid quantities, write separate tests so each result has one clear reason to fail.
 
-## 6. Commands và cách báo kết quả
+## 6. Commands and reporting results
 
-Chạy lệnh từ root `wad-cart-starter`, không từ thư mục cha chứa PDF hoặc workspace phân tích.
+Run commands from the `wad-cart-starter` root, not from the parent directory containing the PDFs or the analysis workspace.
 
-| Lệnh | Mục đích và điều kiện |
+| Command | Purpose and conditions |
 |---|---|
-| `node --version` / `npm --version` | Xác nhận môi trường khi cần đối chiếu local/CI. |
-| `npm test` | Lệnh hiện có: `node --test`, chạy bộ test. |
-| `node --test test/cart.test.js` | Chạy riêng file test của cart. |
-| `git status --short` / `git diff` | Kiểm tra phạm vi và các thay đổi chưa commit. |
-| `git diff --check` / `git diff --cached --check` | Kiểm whitespace của thay đổi chưa stage/đã stage; không kiểm file untracked, không thay thế format gate. |
-| `npm run format:check` | Lệnh hiện có: kiểm whitespace và đường dẫn bắt buộc bằng `node scripts/check-format.js`. |
-| `npm run check` | Lệnh hiện có: chạy format rồi toàn bộ tests; dừng nếu format lỗi, truyền failure của tests. |
+| `node --version` / `npm --version` | Confirm the environment when comparing local and CI versions. |
+| `npm test` | Existing command: `node --test`, which runs the test suite. |
+| `node --test test/cart.test.js` | Run only the cart test file. |
+| `git status --short` / `git diff` | Check scope and uncommitted changes. |
+| `git diff --check` / `git diff --cached --check` | Check whitespace in unstaged/staged changes; does not check untracked files or replace the format gate. |
+| `npm run format:check` | Existing command: check whitespace and required paths with `node scripts/check-format.js`. |
+| `npm run check` | Existing command: run format first, then all tests; stop on format errors and propagate test failures. |
 
-- Đọc `package.json` để xác nhận scripts đang có. Không báo lệnh dự kiến là lệnh đã chạy thành công.
-- Khi task thêm/đổi scripts hoặc workflow, cập nhật bảng commands và hướng dẫn tương ứng trong `README.md`/rules cùng thay đổi đó.
-- `git diff` cũng không hiển thị nội dung file untracked. Đọc các file mới từ danh sách `git status`; kiểm riêng nội dung, whitespace và newline của chúng trước khi bàn giao.
-- Với task tài liệu/rules, review nội dung và diff; không sửa source/tests để tạo kết quả xanh và không chạy lại tests nếu không có lý do liên quan.
-- Khi sửa hành vi hoặc harness, chạy kiểm tra phù hợp sau thay đổi. Báo lệnh, kết quả, exit code và lỗi còn tồn tại.
-- Starter chưa implement có test đỏ do `Error: not implemented`. Chỉ coi đây là baseline khi source thực tế còn ở trạng thái đó; không mặc định mọi test fail là lỗi baseline.
-- Chỉ báo “tests pass” khi lần chạy thực tế thành công. Chỉ báo “CI xanh” khi đã kiểm tra run của commit tương ứng; YAML tồn tại chưa phải bằng chứng CI đã chạy.
+- Read `package.json` to confirm the existing scripts. Do not report a planned command as successfully executed.
+- When a task adds or changes scripts or the workflow, update the commands table and corresponding instructions in `README.md` and these rules in the same change.
+- `git diff` does not show untracked file contents either. Read new files listed by `git status`; check their contents, whitespace, and final newlines separately before delivery.
+- For documentation or rules tasks, review the content and diff. Do not edit source/tests to obtain a passing result or rerun tests without a relevant reason.
+- When changing behavior or the harness, run appropriate checks afterward. Report the commands, results, exit codes, and remaining errors.
+- The unimplemented starter has a failing test due to `Error: not implemented`. Treat this as the baseline only while the actual source remains in that state; do not assume every test failure is a baseline failure.
+- Report “tests pass” only after an actual successful run. Report “CI passes” only after checking the run for the corresponding commit; the existence of YAML is not evidence that CI has run.
 
-## 7. Quy tắc dựng và bảo trì harness
+## 7. Building and maintaining the harness
 
-Phần này quy định thiết kế và cách bảo trì harness. Checker, scripts và workflow đã được tạo; kết quả kiểm chứng và giới hạn CI phải đọc từ `README.md` và `AI-LOG.md`, không suy ra từ việc các file tồn tại.
+This section defines harness design and maintenance. The checker, scripts, and workflow have been created. Read `README.md` and `AI-LOG.md` for verification results and CI limitations; do not infer them from the existence of files.
 
 ### Format checker
 
-- Viết `scripts/check-format.js` bằng Node built-in, không thêm package.
-- Kiểm `package.json` và mọi file `.js` dưới `src/`, `test/`, `scripts/`, bao gồm thư mục con.
-- Đọc UTF-8, chấp nhận LF/CRLF. Phát hiện tab trong phần thụt dòng, whitespace cuối dòng và thiếu newline cuối file.
-- Chỉ kiểm tra và báo lỗi; không tự sửa file. Báo đường dẫn và nguyên nhân, kèm số dòng khi áp dụng.
-- Xác định root theo vị trí checker; dùng file/thư mục thông thường. Báo lỗi khi gặp symbolic link trong các thư mục được kiểm, không âm thầm bỏ qua hoặc theo vòng lặp thư mục.
-- Vi phạm, thiếu đường dẫn bắt buộc hoặc lỗi đọc file phải làm checker exit `1`; chỉ exit `0` khi kiểm tra thành công. Đường dẫn bắt buộc gồm `package.json`, `src/`, `test/`, `scripts/`, `src/cart.js`, `test/cart.test.js`, `scripts/check-format.js`; không để thư mục rỗng hoặc thiếu file test tạo kết quả pass giả.
-- Thử riêng các vi phạm trên bản sao tạm ngoài working tree; xác nhận LF/CRLF hợp lệ pass và từng vi phạm fail. Không để fixture lỗi trong source bài nộp.
-- Công bố đúng giới hạn: checker này kiểm whitespace, không bảo đảm toàn bộ style 2 spaces, single quotes hoặc không semicolon. `node --check` chỉ kiểm cú pháp, không thay checker format.
+- Write `scripts/check-format.js` with Node built-in modules, without adding packages.
+- Check `package.json` and every `.js` file under `src/`, `test/`, and `scripts/`, including subdirectories.
+- Read UTF-8 and accept LF/CRLF. Detect indentation tabs, trailing whitespace, and missing final newlines.
+- Check and report errors only; do not rewrite files. Report the path and reason, including the line number where applicable.
+- Locate the root relative to the checker and use regular files/directories. Report symbolic links in checked directories; do not silently skip them or follow directory cycles.
+- Violations, missing required paths, and read errors must cause exit `1`; exit `0` only after a successful check. Required paths include `package.json`, `src/`, `test/`, `scripts/`, `src/cart.js`, `test/cart.test.js`, and `scripts/check-format.js`. Empty directories or missing test files must not produce a false pass.
+- Test violations separately on temporary copies outside the working tree; confirm that valid LF/CRLF files pass and each violation fails. Do not leave invalid fixtures in the submitted source.
+- State the limitations accurately: this checker checks whitespace and does not enforce every rule about 2 spaces, single quotes, or no semicolons. `node --check` checks syntax only and does not replace the format checker.
 
-### Gate và CI
+### Gate and CI
 
-- Giữ script `test` là `node --test`. Thêm `format:check` chạy `node scripts/check-format.js`; `check` chạy `npm run format:check && npm test`.
-- Gate phải truyền exit code lỗi và dừng nếu format fail. Không bỏ test, nuốt lỗi, thêm `continue-on-error` hoặc chạy lệnh luôn trả thành công.
-- CI trong `.github/workflows/ci.yml` chạy khi push mọi branch, trên Linux, checkout và setup Node `24.x` bằng actions chính thức, rồi chạy `npm run check`.
-- CI chỉ cần quyền `contents: read`; không cài package hoặc cấu hình cache yêu cầu lockfile không tồn tại. Pin phiên bản actions cụ thể và kiểm tra tính tương thích khi tạo workflow.
-- Nếu hàm còn là stub, gate/CI phải tiếp tục đỏ ở test. Không làm yếu gate để che trạng thái chưa implement.
-- Checker tự viết đáp ứng phương án không thêm dependency; không khẳng định chắc chắn giảng viên chấp nhận hoặc tự suy ra điểm Harness.
+- Keep the `test` script as `node --test`. Add `format:check` to run `node scripts/check-format.js`; `check` runs `npm run format:check && npm test`.
+- The gate must propagate failure exit codes and stop when format fails. Do not omit tests, swallow errors, add `continue-on-error`, or run commands that always succeed.
+- CI in `.github/workflows/ci.yml` runs on pushes to every branch, on Linux, checking out the repository and setting up Node `24.x` with official actions, then running `npm run check`.
+- CI needs only `contents: read` permission. Do not install packages or configure caching that requires a nonexistent lockfile. Pin specific action versions and verify compatibility when creating the workflow.
+- If the function is still a stub, the gate and CI must keep failing at the tests. Do not weaken the gate to hide the unimplemented state.
+- The custom checker provides an approach without added dependencies; do not claim that the instructor will definitely accept it or infer the Harness score from that choice alone.
 
-## 8. Quy trình thực hiện task
+## 8. Task workflow
 
-1. Đọc yêu cầu hiện tại, file liên quan và `git status`; ghi nhận thay đổi có sẵn, không ghi đè việc đang làm của sinh viên.
-2. Xác định phạm vi: rules, harness hay hàm/tests. Nếu chỉ được giao rules thì tạo rules và cập nhật hồ sơ liên quan; không coi đó là giao toàn bộ bài.
-3. Với task triển khai, lưu brief thực tế trước khi code: mục tiêu, file được sửa, contract/errors, ràng buộc và cách kiểm chứng. Không viết brief sau rồi nói đó là prompt đã dùng từ đầu.
-4. Sửa đúng file cần thiết, đọc diff, chạy checks phù hợp và sửa lỗi thuộc phạm vi task.
-5. Cập nhật AI log và trạng thái README trung thực; bàn giao file đã sửa, kết quả kiểm chứng và phần còn thiếu.
+1. Read the current request, relevant files, and `git status`; note existing changes and do not overwrite the student's ongoing work.
+2. Determine the scope: rules, harness, or function/tests. If assigned only rules, create the rules and update related records; do not treat that as authorization for the entire assignment.
+3. For implementation tasks, save the actual brief before writing code: goals, files allowed to change, contract/errors, constraints, and verification steps. Do not write a brief afterward and claim it was the original prompt.
+4. Edit only the necessary files, review the diff, run appropriate checks, and fix errors within the task's scope.
+5. Update the AI log and README status honestly; deliver the changed files, verification results, and any missing work.
 
-Không cần xin lại xác nhận cho công việc đã được giao rõ. Nếu task chỉ là tài liệu, không tự commit/push, đổi remote, tạo branch hoặc triển khai các phần khác. Khi được giao commit/push, giữ thay đổi của task riêng biệt và push vào `origin` là fork cá nhân; không push vào `upstream` của giảng viên.
+Do not request confirmation again for clearly assigned work. For documentation-only tasks, do not commit/push, change remotes, create branches, or implement other parts on your own. When assigned to commit/push, keep task changes separate and push to `origin`, the personal fork; do not push to the instructor's `upstream`.
 
-## 9. AI log và bằng chứng tự đánh giá
+## 9. AI log and self-assessment evidence
 
-- Ghi `AI-LOG.md` trong quá trình task hoặc ngay sau mốc vừa hoàn thành; một entry cho mỗi task có sử dụng AI, giữ entry cũ và sáu trường `Tool`, `Asked for`, `Kept`, `Changed`, `Rejected`, `By hand`. Không đợi hoàn thành toàn bài rồi dựng lại nhật ký.
-- `Asked for` tóm tắt task trong một câu; các trường khác ngắn nhưng cụ thể, đối chiếu được với thay đổi thực tế. Lệnh kiểm chứng và CI run cần thiết lưu trong `README.md`; dẫn chiếu file/test/commit thực tế trong báo cáo khi được giao bước tự đánh giá.
-- Không bịa phần sinh viên tự viết, nội dung bị loại, hoạt động review, test pass hoặc commit. Chưa có hoạt động thì ghi đúng là chưa ghi nhận.
-- Phân biệt baseline lịch sử, kết quả mới và công việc dự kiến. Cập nhật trạng thái hiện tại trong README khi thêm sản phẩm; giữ mốc cũ có ngữ cảnh trong AI log và lịch sử Git.
-- Khi được giao báo cáo nộp, tạo `SELF_ASSESSMENT_REPORT.md` theo template và đặt ở root zip: MSSV/họ tên thật, tổng điểm, bảng bốn cột `Criterion`, `Max`, `I claim`, `Evidence`; đủ 5 tiêu chí với Max `30/20/20/15/15`, evidence cụ thể, `What I did not manage`, `What I would do differently`.
-- Không bịa danh tính, deadline hoặc CI URL. Điểm tự nhận, kể cả điểm tối đa, phải dựa trên rubric và evidence; không tự chấm 100 chỉ vì tests xanh. Tổng trong bảng, tổng tự nhận và tên zip `<StudentID>_<total>.zip` phải khớp khi đóng gói bài.
-- Sinh viên cần giải thích được công thức, điều kiện biên, tests và gate. Ưu tiên cách viết dễ đọc, không thêm kỹ thuật khó giải thích khi bài không cần.
+- Write `AI-LOG.md` during the task or immediately after completing a milestone. Use one entry per task involving AI, preserve existing entries, and keep the six fields `Tool`, `Asked for`, `Kept`, `Changed`, `Rejected`, and `By hand`. Do not wait until the whole assignment is complete to reconstruct the log.
+- `Asked for` summarizes the task in one sentence; keep the other fields short, specific, and verifiable against actual changes. Record necessary verification commands and CI runs in `README.md`; reference actual files, tests, or commits in the report when assigned the self-assessment task.
+- Do not invent work written by the student, rejected output, review activities, passing tests, or commits. If an activity has not been recorded, say so.
+- Distinguish historical baselines, new results, and planned work. Update the current README status when adding deliverables; preserve earlier milestones with context in the AI log and Git history.
+- When assigned the submission report, create `SELF_ASSESSMENT_REPORT.md` using the template and place it at the zip root: real student ID/full name, total score, the four columns `Criterion`, `Max`, `I claim`, `Evidence`, all 5 criteria with maxima `30/20/20/15/15`, specific evidence, `What I did not manage`, and `What I would do differently`.
+- Do not invent identities, deadlines, or CI URLs. Claimed scores, including full marks, must be based on the rubric and evidence; do not claim 100 merely because tests pass. The table sum, claimed total, and zip name `<StudentID>_<total>.zip` must agree when packaging the submission.
+- The student must be able to explain the formula, boundaries, tests, and gate. Prefer readable code and do not add techniques that are hard to explain when the assignment does not need them.
 
-## 10. Never — các điều cấm
+## 10. Never — prohibited actions
 
-- **Never** thêm dependency/devDependency, đổi sang TypeScript hoặc đưa framework ngoài phạm vi bài.
-- **Never** sửa contract, bỏ test đúng, dùng `.skip`/`.todo` cho test bắt buộc hoặc làm yếu gate để hợp thức hóa implementation lỗi.
-- **Never** bỏ qua item lỗi, lấy trị tuyệt đối của giá, tự sửa qty, bắt `RangeError` rồi trả `0` hoặc coi giỏ lỗi là giỏ rỗng.
-- **Never** commit secrets, `.env`, `node_modules`, file tạm hoặc đưa API key, dữ liệu thật và bài của người khác vào prompt/log.
-- **Never** xóa/ghi đè thay đổi có sẵn, reset lịch sử hoặc force push nếu task không yêu cầu rõ.
-- **Never** báo task/harness/bài nộp hoàn tất khi bằng chứng cần thiết còn thiếu. Viết rõ phần đã làm và giới hạn của lần kiểm chứng.
+- **Never** add dependencies/devDependencies, switch to TypeScript, or introduce frameworks outside the scope.
+- **Never** change the contract, remove valid tests, use `.skip`/`.todo` for required tests, or weaken the gate to justify an incorrect implementation.
+- **Never** ignore invalid items, take the absolute value of prices, repair quantities automatically, catch `RangeError` and return `0`, or treat an invalid cart as empty.
+- **Never** commit secrets, `.env`, `node_modules`, or temporary files, or include API keys, real data, or someone else's work in prompts/logs.
+- **Never** delete or overwrite existing changes, reset history, or force-push unless the task explicitly requires it.
+- **Never** report the task, harness, or submission as complete while required evidence is missing. State what has been done and the limits of the verification.

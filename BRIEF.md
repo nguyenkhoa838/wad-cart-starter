@@ -26,7 +26,7 @@ and `.gitignore`. Do not add a lockfile, UI, server, framework, or extra modules
 - Shipping is `0` when `subtotal >= freeShipFrom`, otherwise `shipFee`.
   Compare the subtotal before VAT; add shipping once and do not tax shipping.
 - Return `subtotal + VAT + shipping` as a JavaScript `number`, rounding only
-  the final total to the whole đồng. Do not return a formatted string.
+  the final total to the whole dong. Do not return a formatted string.
 - An empty `items` array returns `0`, with no VAT or shipping.
 - Throw `RangeError` for a negative `price` or a `qty` that is not a positive
   integer, including `0`, negative quantities, and fractions such as `1.5`.
@@ -40,8 +40,8 @@ and `.gitignore`. Do not add a lockfile, UI, server, framework, or extra modules
 
 ```js
 const items = [
-  { name: 'Áo thun', price: 180000, qty: 2 },
-  { name: 'Sổ tay', price: 45000, qty: 1 },
+  { name: 'T-shirt', price: 180000, qty: 2 },
+  { name: 'Notebook', price: 45000, qty: 1 },
 ]
 const options = { vatRate: 0.08, freeShipFrom: 500000, shipFee: 30000 }
 ```
@@ -58,7 +58,7 @@ one clear reason to fail. Cover:
 2. An empty cart returns `0` without VAT or shipping.
 3. Shipping is free exactly at the threshold and above it, and charged below it.
 4. VAT does not count toward the free-shipping threshold.
-5. Fractional totals round to the whole đồng only after all amounts are added.
+5. Fractional totals round to the whole dong only after all amounts are added.
 6. A negative price throws `RangeError`.
 7. Zero, negative, and non-integer quantities each throw `RangeError`.
 8. Supplied options are used, zero-price items follow the shipping rule, and

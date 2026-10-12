@@ -14,7 +14,7 @@ npm test
 - `subtotal` = sum of `price × qty`
 - VAT = `vatRate` applied to the subtotal
 - shipping = `0` when `subtotal >= freeShipFrom`, otherwise `shipFee`
-- return `subtotal + VAT + shipping`, **a number**, rounded to the whole đồng
+- return `subtotal + VAT + shipping`, **a number**, rounded to the whole dong
 - an empty cart returns `0` — no VAT, no shipping
 - a negative `price`, or a `qty` that is not a positive integer, throws `RangeError`
 
@@ -59,6 +59,10 @@ and all 47 tests passing, including shipping boundaries, rounding, validation,
 and unchanged inputs. [CI passed for implementation commit `a42779d`](https://github.com/nguyenkhoa838/wad-cart-starter/actions/runs/38252231522),
 with the run's full commit SHA verified and its job log confirming all 47 tests
 passed. Further commits need their own successful CI run.
+
+[CI passed for the current code at commit `b1a7731`](https://github.com/nguyenkhoa838/wad-cart-starter/actions/runs/38257492392).
+The run's full commit SHA was verified on 12 October 2026, and its `check` job
+and `Run format and tests` step both completed successfully.
 
 ## What you hand in
 
