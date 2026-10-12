@@ -134,9 +134,9 @@ Tool: OpenAI Codex (ứng dụng desktop), Node.js, npm, Git và GitHub.
 
 Asked for: Kiểm tra kỹ gate thêm một lần, tiếp tục cấu hình CI và cho chạy trên GitHub.
 
-Kept: Checker, scripts và workflow đã có; lần chạy mới kiểm chứng lại 42/42 tình huống đúng dự kiến và gate thật vẫn fail do `not implemented`.
+Kept: Checker, scripts và workflow đã có; lần chạy mới kiểm chứng lại 42/42 tình huống đúng dự kiến. CI trên GitHub chạy đúng commit harness, format đạt rồi test fail do `not implemented`.
 
-Changed: Codex đối chiếu lại actions chính thức, mở rộng phạm vi brief cho bước commit/push và ghi kết quả review; bằng chứng CI thực tế được bổ sung ở mục 11 của evidence sau khi có run.
+Changed: Codex đối chiếu lại actions chính thức, cập nhật phạm vi brief, commit/push harness lên fork cá nhân và đọc job/log CI; lưu SHA, run URL và kết quả thực tế ở mục 11 của evidence.
 
 Rejected: Không có lỗi gate cần thay implementation qua lần review này; chưa ghi nhận sinh viên loại bỏ đầu ra.
 

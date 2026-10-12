@@ -6,11 +6,11 @@ Ghi chú cập nhật ngày 12/10/2026 để tra cứu khi viết `SELF_ASSESSME
 
 | Tiêu chí | Max | Bằng chứng hiện có | Trạng thái cần phản ánh khi tự đánh giá |
 |---|---:|---|---|
-| Behaviour | 30 | `src/cart.js:3`; mục 4 và 10 | Hàm còn ném `Error('not implemented')`; lần chạy mới vẫn fail, chưa chứng minh hành vi đúng. |
-| Tests | 20 | `test/cart.test.js:7`, test `the example from the slides`; mục 4 và 10 | Có 1 test và đang fail; chưa bổ sung bộ test hành vi cho bài. |
-| Harness | 20 | `AGENTS.md`, `scripts/check-format.js`, `package.json`, `.github/workflows/ci.yml`; mục 10 | Đã dựng và kiểm chứng gate local, format đạt; gate tổng đỏ do stub. Có workflow, chưa push/chưa có CI run. |
+| Behaviour | 30 | `src/cart.js:3`; mục 4, 10 và 11 | Hàm còn ném `Error('not implemented')`; local và CI vẫn fail, chưa chứng minh hành vi đúng. |
+| Tests | 20 | `test/cart.test.js:7`, test `the example from the slides`; mục 4, 10 và 11 | Có 1 test và đang fail ở local/CI; chưa bổ sung bộ test hành vi cho bài. |
+| Harness | 20 | `AGENTS.md`, `scripts/check-format.js`, `package.json`, `.github/workflows/ci.yml`; mục 10 và 11 | Gate local được kiểm chứng lại 42/42 tình huống; workflow đã push và CI thực sự chạy, format đạt rồi test fail đúng do stub. Chưa có CI xanh của bài hoàn chỉnh. |
 | Brief | 15 | `BRIEF_HARNESS.md`; mục 7 và 10 | Brief harness được cập nhật phạm vi đã giao trước khi code và dùng cho task dựng gate; chưa có brief triển khai hàm/tests. |
-| AI-LOG.md | 15 | Các entry ngày 12/10/2026 trong `AI-LOG.md`; commit ở mục 3 | Đã ghi tác vụ phân tích/review/dựng gate cùng các mốc cũ; các entry sau commit tài liệu ở mục 3 chưa commit. |
+| AI-LOG.md | 15 | Các entry ngày 12/10/2026 trong `AI-LOG.md`; commit ở mục 3 và 11 | Các entry phân tích/review/dựng gate đã nằm trong commit harness được push; entry task hiện tại ghi kết quả kiểm tra lại và CI thực tế. |
 
 Khi hoàn thành bài, cập nhật bảng bằng kết quả cuối cùng và dùng file, section, commit hoặc tên test có thật cho từng dòng Evidence trong báo cáo. Baseline đỏ là bằng chứng trạng thái ban đầu, chưa chứng minh test cuối cùng pass.
 
@@ -55,7 +55,7 @@ Khi hoàn thành bài, cập nhật bảng bằng kết quả cuối cùng và d
 
 ## 5. Phần chưa hoàn thành và điểm cần xác nhận
 
-- Đã viết rules và dựng checker, gate local, workflow CI; xem mục 10. Chưa triển khai `cartTotal`, bổ sung bộ test đầy đủ hoặc tạo `SELF_ASSESSMENT_REPORT.md` đã điền. Brief harness đã được dùng cho task dựng gate; chưa có brief hàm/tests, chưa có CI run và chưa chứng minh gate xanh của bài hoàn chỉnh.
+- Đã viết rules, dựng checker/gate/workflow và xác minh CI chạy trên GitHub; xem mục 10 và 11. Chưa triển khai `cartTotal`, bổ sung bộ test đầy đủ hoặc tạo `SELF_ASSESSMENT_REPORT.md` đã điền. Brief harness đã được dùng cho task dựng gate; chưa có brief hàm/tests hoặc gate/CI xanh của bài hoàn chỉnh.
 - Deadline cần xác nhận trên Classroom.
 - Tài liệu chưa xác nhận việc chấp nhận checker format/lint tự viết khi đề ghi no dependencies.
 - Rubric không mô tả dải chênh lệch tự đánh giá từ -11 đến -20; chưa tự suy ra cách điều chỉnh.
@@ -161,4 +161,14 @@ Các ghi nhận dưới đây phản ánh thời điểm soạn/rút gọn bản
 - Lần chạy sandbox dừng ở junction với `EPERM`; đã chạy lại với quyền được cấp và hoàn thành. Đây là giới hạn sandbox khi tạo fixture, không phải lỗi checker.
 - `npm run check` trên repo thật: format đạt (`4 files`), 1 test/0 pass/1 fail do `Error: not implemented` tại `src/cart.js:3:9`; exit `1`. `git diff --check` exit `0`.
 - Đối chiếu lại release chính thức và `action.yml` tại đúng SHA đã pin của checkout/setup-node: versions và inputs đúng; không cần đổi workflow. Workflow vẫn push mọi branch, Linux, Node `24.x`, `contents: read`, không cài package/cache hoặc bỏ qua failure.
-- `git ls-remote origin refs/heads/main` xác minh remote trước push ở `64cd54ed4f07431fb531bb8c0d8817493272c7e7`; GitHub API lúc đó báo `total_count: 0` cho workflows. CI sẽ được xác minh sau push, không suy ra kết quả từ YAML.
+- `git ls-remote origin refs/heads/main` xác minh remote trước push ở `64cd54ed4f07431fb531bb8c0d8817493272c7e7`; GitHub API lúc đó báo `total_count: 0` cho workflows. Đây là mốc trước push; kết quả mới từ run thực tế được ghi bên dưới.
+
+### Commit, push và run CI thực tế
+
+- Commit harness: [`5579082d4cfb5a1d2ffe88df1557a07a8cedafa1`](https://github.com/nguyenkhoa838/wad-cart-starter/commit/5579082d4cfb5a1d2ffe88df1557a07a8cedafa1), `ci: add verified format and test gates`. Có 8 file thuộc phạm vi harness/hồ sơ; source/tests và contract không đổi.
+- `git diff --cached --check` exit `0` trước commit; cả 8 file bàn giao có newline cuối file, không whitespace cuối dòng. `git push origin main` exit `0`, đưa remote từ `64cd54e` tới `5579082`.
+- Workflow API xác nhận `CI`, path `.github/workflows/ci.yml`, state `active`. Run có event `push`, branch `main`, `head_sha` trùng toàn bộ SHA commit harness, status `completed`, conclusion `failure`.
+- Run: [CI — 38238927330](https://github.com/nguyenkhoa838/wad-cart-starter/actions/runs/38238927330); job: [check — 114776398101](https://github.com/nguyenkhoa838/wad-cart-starter/actions/runs/38238927330/job/114776398101). Checkout và Setup Node.js đều `success`; bước `Run format and tests` là `failure`.
+- Đã đọc log từ GitHub, không chỉ suy từ trạng thái: runner Linux, Node `v24.21.0` (cùng major `24.x` với local), lệnh `npm run check`, `Format check passed (4 files)`, 1 test/0 pass/1 fail, `Error: not implemented`, `Process completed with exit code 1`.
+- Snapshot API và log lưu ngoài repo bài nộp tại `C:/Users/vongu/OneDrive/Documents/ChatGPT/IA#1 - Webdev/tmp/gate-review-20261012/github-ci-38238927330.json` và `github-ci-38238927330.log`; không lưu credential vào hồ sơ.
+- Kết luận: gate local và cấu hình CI hoạt động đúng; test đỏ phản ánh hàm stub. Bước dựng/chạy CI đã được xác minh, chưa phải bài hoàn chỉnh hoặc CI xanh. Cập nhật hồ sơ kết quả bằng commit tài liệu tiếp theo; run trên đây là bằng chứng của đúng commit harness.
