@@ -1,6 +1,6 @@
 # cart — session 2 starter
 
-Run the test first and watch it fail:
+Run the behaviour tests:
 
 ```bash
 npm test
@@ -54,9 +54,10 @@ commit SHAs, permissions are limited to `contents: read`, and package caching is
 disabled. No dependency installation is performed. A failed check fails the job;
 this workflow does not itself block commits or pushes.
 
-The current `cartTotal` is still a stub: format can pass while `npm test` and the
-combined gate fail with `Error: not implemented`. CI execution must be confirmed
-from a run for the pushed commit; the workflow file alone is not a completed run.
+`cartTotal` is implemented. The local gate has been verified with format passing
+and all 47 tests passing, including shipping boundaries, rounding, validation,
+and unchanged inputs. CI execution must be confirmed from a run for the pushed
+commit; the workflow file alone is not a completed run.
 
 ## What you hand in
 

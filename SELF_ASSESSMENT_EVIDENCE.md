@@ -6,11 +6,11 @@ Ghi chú cập nhật ngày 12/10/2026 để tra cứu khi viết `SELF_ASSESSME
 
 | Tiêu chí | Max | Bằng chứng hiện có | Trạng thái cần phản ánh khi tự đánh giá |
 |---|---:|---|---|
-| Behaviour | 30 | `src/cart.js:3`; mục 4, 10 và 11 | Hàm còn ném `Error('not implemented')`; local và CI vẫn fail, chưa chứng minh hành vi đúng. |
-| Tests | 20 | `test/cart.test.js:7`, test `the example from the slides`; mục 4, 10 và 11 | Có 1 test và đang fail ở local/CI; chưa bổ sung bộ test hành vi cho bài. |
-| Harness | 20 | `AGENTS.md`, `scripts/check-format.js`, `package.json`, `.github/workflows/ci.yml`; mục 10 và 11 | Gate local được kiểm chứng lại 42/42 tình huống; workflow đã push và CI thực sự chạy, format đạt rồi test fail đúng do stub. Chưa có CI xanh của bài hoàn chỉnh. |
-| Brief | 15 | `BRIEF_HARNESS.md`; mục 7 và 10 | Brief harness được cập nhật phạm vi đã giao trước khi code và dùng cho task dựng gate; chưa có brief triển khai hàm/tests. |
-| AI-LOG.md | 15 | Các entry ngày 12/10/2026 trong `AI-LOG.md`; commit ở mục 3 và 11 | Các entry phân tích/review/dựng gate đã nằm trong commit harness được push; entry task hiện tại ghi kết quả kiểm tra lại và CI thực tế. |
+| Behaviour | 30 | `src/cart.js:1`; mục 14 | Hàm đã triển khai, gate repo thật đạt format và 47/47 tests. Review source xác nhận tính thuần và xử lý mọi item; chưa xác minh CI của implementation. |
+| Tests | 20 | `test/cart.test.js`, `TEST_PLAN.md` mục 3-5 và 10; mục 13 và 14 | Giữ nguyên 47 tests đã review, tất cả pass trên source repo thật; không cancelled/skipped/todo. QA tham chiếu/mutation ở mục 13 là bước kiểm chất lượng tests trước triển khai. |
+| Harness | 20 | `AGENTS.md`, `scripts/check-format.js`, `package.json`, `.github/workflows/ci.yml`; mục 10, 11 và 14 | Gate local exit 0 sau triển khai; harness giữ nguyên. Mục 11 xác minh CI cũ đỏ đúng do stub; chưa có run CI xanh của implementation mới. |
+| Brief | 15 | `BRIEF_HARNESS.md`, `BRIEF_IMPLEMENTATION.md`, `TEST_PLAN.md`; mục 7, 10, 12-14 | Brief và plan được review trước code; tests và hàm đã triển khai theo phạm vi được giao. |
+| AI-LOG.md | 15 | Các entry ngày 12/10/2026 trong `AI-LOG.md`; mục 3, 11-14 | Đã thêm entry triển khai hàm, giữ lịch sử/thay đổi có sẵn. Những thay đổi hiện tại chưa commit/push. |
 
 Khi hoàn thành bài, cập nhật bảng bằng kết quả cuối cùng và dùng file, section, commit hoặc tên test có thật cho từng dòng Evidence trong báo cáo. Baseline đỏ là bằng chứng trạng thái ban đầu, chưa chứng minh test cuối cùng pass.
 
@@ -55,7 +55,7 @@ Khi hoàn thành bài, cập nhật bảng bằng kết quả cuối cùng và d
 
 ## 5. Phần chưa hoàn thành và điểm cần xác nhận
 
-- Đã viết rules, dựng checker/gate/workflow và xác minh CI chạy trên GitHub; xem mục 10 và 11. Chưa triển khai `cartTotal`, bổ sung bộ test đầy đủ hoặc tạo `SELF_ASSESSMENT_REPORT.md` đã điền. Brief harness đã được dùng cho task dựng gate; chưa có brief hàm/tests hoặc gate/CI xanh của bài hoàn chỉnh.
+- Đã triển khai `cartTotal` và đạt gate local với 47/47 tests ở mục 14; bộ tests được review/QA ở mục 13. Rules/checker/workflow đã có, CI cũ xác minh ở mục 11. Chưa tạo `SELF_ASSESSMENT_REPORT.md` đã điền hoặc xác minh CI xanh của implementation mới.
 - Deadline cần xác nhận trên Classroom.
 - Tài liệu chưa xác nhận việc chấp nhận checker format/lint tự viết khi đề ghi no dependencies.
 - Rubric không mô tả dải chênh lệch tự đánh giá từ -11 đến -20; chưa tự suy ra cách điều chỉnh.
@@ -172,3 +172,72 @@ Các ghi nhận dưới đây phản ánh thời điểm soạn/rút gọn bản
 - Đã đọc log từ GitHub, không chỉ suy từ trạng thái: runner Linux, Node `v24.21.0` (cùng major `24.x` với local), lệnh `npm run check`, `Format check passed (4 files)`, 1 test/0 pass/1 fail, `Error: not implemented`, `Process completed with exit code 1`.
 - Snapshot API và log lưu ngoài repo bài nộp tại `C:/Users/vongu/OneDrive/Documents/ChatGPT/IA#1 - Webdev/tmp/gate-review-20261012/github-ci-38238927330.json` và `github-ci-38238927330.log`; không lưu credential vào hồ sơ.
 - Kết luận: gate local và cấu hình CI hoạt động đúng; test đỏ phản ánh hàm stub. Bước dựng/chạy CI đã được xác minh, chưa phải bài hoàn chỉnh hoặc CI xanh. Cập nhật hồ sơ kết quả bằng commit tài liệu tiếp theo; run trên đây là bằng chứng của đúng commit harness.
+
+## 12. Chốt và review brief triển khai hàm/tests
+
+- Ngày: 12/10/2026, sinh viên giao chốt brief triển khai hàm và yêu cầu review/kiểm tra kỹ. Task này tạo `BRIEF_IMPLEMENTATION.md`, cập nhật AI log/evidence; không triển khai source/tests, sửa harness hoặc commit/push.
+- Bắt đầu tại HEAD `dcdd05694f4839f9f2d4e01576eca12a954da77e`, working tree sạch. Đọc trực tiếp rules, README, package, source/test, brief harness và hồ sơ hiện có; xác nhận Node local `v24.11.1`, npm `11.6.2`.
+- Đọc lại đủ 4 trang PDF rubric gốc bằng pypdf và xem các PNG đã render từ rubric ở bước trước. Đối chiếu mục Behaviour, Tests, Brief; không tải lại slide/web hoặc xác minh remote trong task này. Case giỏ rỗng với options rút gọn dựa trên slide đã đọc và lưu ở mục 7, cùng rules hiện tại.
+- Brief chốt allowlist source/tests/README/log/evidence, contract và RangeError, no dependencies/devDependencies, style/hàm thuần, test matrix và lệnh/điều kiện hoàn tất. README nằm trong scope triển khai để cập nhật câu trạng thái stub khi hàm thực sự được viết; không đổi đặc tả hoặc gate.
+- Review tập trung vào VAT dạng tỷ lệ, ngưỡng subtotal trước VAT/ship với `>=`, giỏ rỗng và giỏ có item giá 0, giá lẻ/làm tròn cuối cùng, qty sai kiểu hoặc thiếu qty, lỗi ở item sau, options khác ví dụ và input không bị sửa. Tách các trường hợp chưa được đặc tả để không tự thêm validation/defaults/error contract.
+- Ma trận gồm 13 case trả số, 10 case RangeError và 1 case input frozen, dự kiến 24 tests riêng; đây là kế hoạch, chưa phải tests đã được viết/chạy. `assert.equal` từ `node:assert/strict` kiểm cả giá trị và kiểu, không cần thêm test chỉ lặp lại `typeof`; message lỗi không bị ràng buộc.
+- Dùng Python Decimal tính độc lập toàn bộ 13 expected: **13/13 đúng**, script exit `0`. C09 có tổng chính xác `30.60` -> `31`; làm tròn item, subtotal hoặc VAT sớm trong ba biến thể kiểm tra cho `30`. Các case C12/C13 dùng options riêng để phát hiện hardcode.
+- Script và kết quả nằm ngoài repo bài nộp tại `C:/Users/vongu/OneDrive/Documents/ChatGPT/IA#1 - Webdev/tmp/brief-review-20261012/verify-brief.py` và `verification-results.json`. Script chỉ kiểm số liệu/bố cục brief và đối chiếu file với HEAD; không gọi `cartTotal` hoặc chạy bộ tests bài.
+- Đối chiếu 10 file được bảo toàn với HEAD: source, test, package, checker, workflow, rules, brief harness, README, gitignore và repository link không đổi. Baseline đỏ dùng bằng chứng đã có ở mục 11; không chạy lại `npm test`/`npm run check` trong task tài liệu hoặc báo có kết quả implementation mới.
+- QA tài liệu: `git diff --check` exit `0`; đọc riêng toàn bộ brief mới chưa được Git theo dõi, kiểm cả ba file tài liệu có newline cuối file và không whitespace cuối dòng. Review code fence, bảng Markdown, đủ sáu trường entry AI log và tính nhất quán giữa trạng thái brief/evidence. Chỉ có brief mới và AI log/evidence thay đổi, chưa commit/push.
+
+## 13. Lập plan, review và bổ sung test hành vi
+
+- Ngày: 12/10/2026. Sinh viên giao lập plan chi tiết cho bước tests, review/kiểm tra kỹ rồi thực hiện. Phạm vi là `TEST_PLAN.md`, `test/cart.test.js`, AI log và evidence; không triển khai hàm hoặc commit/push trong bước này.
+- Đầu bước: HEAD `dcdd05694f4839f9f2d4e01576eca12a954da77e`; đã có thay đổi chưa commit ở AI log/evidence và brief triển khai mới. Lưu bản sao/hash 13 file trước khi làm; giữ các thay đổi đó. Môi trường: Node `v24.11.1`, npm `11.6.2`.
+- Chạy baseline mới `npm test`: 1 test, 0 pass, 1 fail vì `Error: not implemented`, 0 cancelled/skipped/todo, exit `1`.
+
+### Plan và review trước sửa tests
+
+- Lưu `TEST_PLAN.md` trước code, với mục tiêu, allowlist, contract, nhóm input chưa đặc tả, ma trận 22 case số/20 case lỗi/3 case tính thuần, trình tự, QA đối kháng và điều kiện hoàn thành.
+- Dùng script độc lập `review-plan.mjs` tính bằng BigInt theo đơn vị 1/100 và 1/10000 đồng: **22/22 expected đúng**, tổng **45 cases**, ID duy nhất; exit `0`. Không import `cartTotal` hoặc chạy tests bài ở bước kiểm toán. Tất cả 13 file đầu bước vẫn nguyên hash tại mốc review, chứng minh review xong mới sửa tests.
+- Review đối chiếu README, rules và brief hiện có; dùng nguồn rubric/slide đã đối chiếu ở các mốc trước, không đọc lại PDF/slide/web hoặc xác minh remote trong task này. Không áp đặt input chưa đặc tả, default, error message hoặc chi tiết nội bộ của implementation.
+- Giữ C01-C13 của brief; thêm biên làm tròn xuống/đúng nửa đồng, tổng nhiều item, ship một lần/VAT không áp lên ship, ngưỡng bằng 0, name và ship lẻ. Qty lỗi gồm các nhóm số không hợp lệ, mọi kiểu JavaScript khác number và field thiếu; mỗi case có tên riêng. Input mutable/frozen và nhánh lỗi có tests giữ nguyên dữ liệu riêng.
+- Review bổ sung sau QA ban đầu: một biến thể trả kết quả trước validation khi miễn ship **pass toàn bộ 45 tests**, chứng minh thiếu case nhánh này. Cập nhật plan/review trước khi thêm E21/E22 cho giỏ `600000 + (-1)` và `600000 + 100 × 0`; cả hai vẫn vượt ngưỡng nhưng phải ném RangeError. Ma trận cuối cùng: **22 case số, 22 case lỗi, 3 case tính thuần = 47 tests**. Probe và plan mốc cũ được lưu ngoài repo, không sửa yếu expected hoặc source.
+
+### Sản phẩm và kết quả repo thật
+
+- Giữ nguyên toàn bộ test starter `the example from the slides` với expected `467400`; thêm 46 tests, tổng **47**. Dùng Node built-in, strict equality với expected literal và `assert.throws(..., RangeError)`, không skip/todo hoặc package mới. Test data/options riêng cho từng case; vòng lặp chỉ đăng ký tests theo dữ liệu.
+- Đọc diff trước chạy. `node --check test/cart.test.js`: exit `0`.
+- `npm run check` cuối cùng: checker đạt **4 files**; runner nhận **47 tests, 0 pass, 47 fail, 0 cancelled, 0 skipped, 0 todo**, exit **1**. Log có 47 stack locations `src/cart.js:3:9`; các failures do stub ném Error hoặc assertion nhận sai loại lỗi thay vì RangeError. Không có lỗi syntax/import.
+- Source vẫn nguyên stub, README vẫn mô tả đúng trạng thái. Chưa đạt điều kiện `npm test` xanh của bài nộp, chưa có CI cho bộ tests mới. Các run CI mục 11 thuộc commit harness cũ, không phải kết quả task này.
+
+### QA chất lượng tests ngoài repo bài nộp
+
+- Bản sao tạm giữ nguyên file tests mới và sử dụng hàm tham chiếu riêng: **47 tests, 47 pass, 0 fail, 0 cancelled/skipped/todo**, exit **0**. Hàm tham chiếu chỉ nằm ngoài repo; không chép vào source bài.
+- Script đối chiếu 20 fixture numeric trong bảng tests với input/options/expected đã kiểm toán, giữ nguyên C01 và chạy riêng C03 với options rút gọn. Lần đầu script QA gặp khác biệt LF/CRLF khi tìm đoạn fixture; sửa script để chuẩn hóa line endings khi đọc, rồi chạy lại thành công. Không sửa expected hoặc tests để xử lý lỗi tooling đó.
+- QA ban đầu phát hiện 44/44 biến thể đã chọn, rồi probe nhánh miễn ship tìm ra lỗ hổng và thúc đẩy bổ sung hai tests. QA cuối cùng chạy **46 biến thể lỗi cố ý: 46/46 bị phát hiện, 0 survivor**; mỗi run nhận đủ 47 tests, exit `1` và không cancelled/skipped/todo. Các nhóm gồm bỏ/hardcode VAT, dùng rate như phần trăm, VAT lên ship; bỏ qty/item; sai ngưỡng/ship; empty/zero; làm tròn/kiểu trả về; validation/ép kiểu/loại lỗi ở cả hai nhánh ship; name và sửa input.
+- Ví dụ evidence phân biệt bug: `M09` dùng `>` bị C04 phát hiện; `M25` round VAT sớm bị C09 phát hiện; `M26` round ship sớm bị C22 phát hiện; `M40` chỉ sửa input trước nhánh lỗi bị P03 phát hiện; `M41` dùng name làm giá bị C21 phát hiện; `M42` dùng fallback cho ngưỡng 0 bị C20 phát hiện; `M45/M46` bỏ validation giá/qty khi miễn ship bị E21/E22 phát hiện. Chi tiết tên test/fail count của đủ 46 biến thể có trong JSON/TAP.
+- Kết quả tham chiếu/mutation chỉ QA bộ tests và các lỗi đã chọn; không chứng minh mọi input/bug, không được dùng để báo Behaviour của source bài đã đúng.
+
+### Artifacts kiểm chứng và bàn giao
+
+- Thư mục ngoài repo: `C:/Users/vongu/OneDrive/Documents/ChatGPT/IA#1 - Webdev/tmp/behaviour-tests-review-20261012/`.
+- `before/` và `before-hashes.json`: snapshot đầu bước. `numeric-cases.json`, `review-plan.mjs`, `plan-review-results.json`: kiểm toán plan trước code.
+- `plan-before-free-shipping-review.md`, `initial-45-test-qa-results.json`, `initial-45-repository-gate.log`, `initial-45-final-review-results.json`: mốc QA ban đầu được bảo toàn. `probe-free-shipping.mjs` và `free-shipping-validation-probe.mjs/.json/.tap`: bằng chứng lỗ hổng trước khi thêm hai tests.
+- `repository-gate.log`: kết quả gate repo đỏ; `verify-tests.mjs`, `reference-cart.mjs`, `test-qa-results.json`, `mutation-logs/`: QA bản sao tạm. `test-qa-results.json` ghi SHA-256 của file tests đã kiểm chứng.
+- QA bàn giao: so hash 10 file được bảo toàn (source, README, package, checker, workflow, rules, brief harness, brief implementation, gitignore, repository link); giữ nguyên phần AI log có sẵn và test starter; kiểm newline/whitespace file mới, bảng/ID plan, `git diff --check`. Kết quả chi tiết lưu trong `final-review-results.json`.
+- Chỉ bốn file thuộc bước này thay đổi so với snapshot: plan mới, tests, AI log và evidence. Hàm chưa triển khai; bước tiếp theo là triển khai theo brief rồi chạy gate local và xác minh CI khi được giao.
+
+## 14. Triển khai cartTotal và đạt gate local
+
+- Ngày: 12/10/2026. Sinh viên giao triển khai hàm sau bước tests. Đọc rules/brief/source/tests/package và trạng thái Git; cập nhật phạm vi brief trước khi thay stub. HEAD `dcdd05694f4839f9f2d4e01576eca12a954da77e`, Node `v24.11.1`, npm `11.6.2`; giữ các thay đổi có sẵn, lưu snapshot/hash 14 file đầu bước.
+- `src/cart.js`: giỏ rỗng trả `0` ngay; vòng lặp kiểm `price < 0` và qty bằng `Number.isInteger(qty)` cùng điều kiện dương, ném `RangeError` khi sai. Chỉ cộng `price × qty` sau validation; mọi item phải qua kiểm tra trước khi tính shipping, kể cả giỏ được miễn ship.
+- VAT bằng subtotal nhân rate; miễn ship khi subtotal `>= freeShipFrom`, dùng nguyên options; trả `Math.round(subtotal + vat + shipping)`. Giá 0 và giá lẻ được xử lý theo contract, name không tham gia tính toán. Không sửa input, I/O/global, default/validation ngoài đặc tả hoặc dependency mới.
+- Review diff trước chạy; `node --check src/cart.js`: exit **0**. `npm run check` trên repo thật: **format đạt 4 files; 47 tests, 47 pass, 0 fail, 0 cancelled, 0 skipped, 0 todo**, exit **0**. Đây là kết quả implementation thật; khác với các run tham chiếu tạm ở mục 13.
+- Giữ nguyên SHA-256 của `test/cart.test.js` cùng TEST_PLAN/rules/package/checker/workflow/brief harness/gitignore/repository link so với đầu bước. Không thay expected hoặc làm yếu gate để có kết quả xanh. Chỉ source, trạng thái brief, README, AI log và evidence thay đổi trong bước này.
+- README phản ánh hàm đã triển khai và gate local xanh; brief ghi phạm vi/kết quả thực tế, AI log thêm một entry đúng sáu trường. Các mốc stub/đỏ ở mục 4, 10-13 là lịch sử và được giữ nguyên.
+- Artifacts kiểm chứng nằm ngoài repo tại `C:/Users/vongu/OneDrive/Documents/ChatGPT/IA#1 - Webdev/tmp/cart-implementation-review-20261012/`: `before/`, `before-hashes.json`, `repository-gate.log`, `final-review.mjs` và `final-review-results.json`. QA bàn giao kiểm hash/phạm vi, nội dung mới có newline và không whitespace lỗi, AI log giữ nguyên phần trước và `git diff --check` exit `0`.
+- Hoàn tất triển khai hàm và kiểm chứng local. Chưa commit/push hoặc xác minh CI cho implementation; run ở mục 11 thuộc commit harness cũ. Không tự suy ra điểm rubric, hoàn tất báo cáo tự chấm hoặc gói nộp từ gate local xanh.
+
+## 15. Review lại hàm, commit và xác minh CI xanh
+
+- Ngày: 12/10/2026. Sinh viên giao review hàm, sửa lỗi nếu có, chạy lại gate, commit và xác nhận CI xanh. Đầu bước: HEAD `dcdd05694f4839f9f2d4e01576eca12a954da77e`, nhánh `main`; đã có 5 file tracked thay đổi và 2 file mới từ các bước brief/tests/implementation. Lưu snapshot/hash 14 file ngoài repo trước khi cập nhật hồ sơ, giữ các thay đổi có sẵn.
+- Review toàn bộ `src/cart.js`, 47 tests, README, rules, brief/plan, package, checker và workflow. Không phát hiện lỗi cần sửa theo contract: giỏ rỗng trả trước khi đọc options; mọi item được kiểm giá/qty trước phép nhân và trước nhánh miễn ship; subtotal dùng đủ price/qty; VAT chỉ trên subtotal; ngưỡng dùng `>=` trước VAT/ship; làm tròn một lần ở cuối; input không bị sửa. Không bổ sung hành vi cho input chưa đặc tả.
+- `npm run check` trên repo thật, Node `v24.11.1`, npm `11.6.2`: **format đạt 4 files; 47 tests, 47 pass, 0 fail, 0 cancelled, 0 skipped, 0 todo**, exit **0**. Log tại `C:/Users/vongu/OneDrive/Documents/ChatGPT/IA#1 - Webdev/tmp/cart-final-review-20261012/repository-gate.log`.
+- `git ls-remote origin refs/heads/main` xác nhận remote ở đúng HEAD đầu bước. Commit/push vào fork `nguyenkhoa838/wad-cart-starter`, không vào `upstream`; trạng thái CI sẽ được ghi sau khi kiểm tra run đúng SHA, chưa dùng kết quả CI cũ làm bằng chứng implementation xanh.
