@@ -133,6 +133,6 @@ By hand: Giao triển khai hàm; chưa ghi nhận code tự viết.
 Tool: OpenAI Codex, Node.js, npm, Git, GitHub API.
 Asked for: Review lại hàm, sửa lỗi nếu có, chạy gate, commit và xác nhận CI xanh.
 Kept: Hàm đúng contract, nguyên bộ 47 tests và harness; review không phát hiện lỗi cần sửa.
-Changed: Ghi kết quả gate local 47/47 pass và phạm vi commit/push; CI sẽ được cập nhật sau khi đọc run thực tế.
+Changed: Commit/push implementation và hồ sơ lên fork; xác minh SHA/job/log CI xanh, format đạt và 47/47 tests pass; lưu bằng chứng trong README/evidence.
 Rejected: Chưa ghi nhận.
 By hand: Giao review, commit và xác nhận CI; chưa ghi nhận code tự viết.

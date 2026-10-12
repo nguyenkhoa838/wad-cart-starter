@@ -6,11 +6,11 @@ Ghi chú cập nhật ngày 12/10/2026 để tra cứu khi viết `SELF_ASSESSME
 
 | Tiêu chí | Max | Bằng chứng hiện có | Trạng thái cần phản ánh khi tự đánh giá |
 |---|---:|---|---|
-| Behaviour | 30 | `src/cart.js:1`; mục 14 | Hàm đã triển khai, gate repo thật đạt format và 47/47 tests. Review source xác nhận tính thuần và xử lý mọi item; chưa xác minh CI của implementation. |
-| Tests | 20 | `test/cart.test.js`, `TEST_PLAN.md` mục 3-5 và 10; mục 13 và 14 | Giữ nguyên 47 tests đã review, tất cả pass trên source repo thật; không cancelled/skipped/todo. QA tham chiếu/mutation ở mục 13 là bước kiểm chất lượng tests trước triển khai. |
-| Harness | 20 | `AGENTS.md`, `scripts/check-format.js`, `package.json`, `.github/workflows/ci.yml`; mục 10, 11 và 14 | Gate local exit 0 sau triển khai; harness giữ nguyên. Mục 11 xác minh CI cũ đỏ đúng do stub; chưa có run CI xanh của implementation mới. |
-| Brief | 15 | `BRIEF_HARNESS.md`, `BRIEF_IMPLEMENTATION.md`, `TEST_PLAN.md`; mục 7, 10, 12-14 | Brief và plan được review trước code; tests và hàm đã triển khai theo phạm vi được giao. |
-| AI-LOG.md | 15 | Các entry ngày 12/10/2026 trong `AI-LOG.md`; mục 3, 11-14 | Đã thêm entry triển khai hàm, giữ lịch sử/thay đổi có sẵn. Những thay đổi hiện tại chưa commit/push. |
+| Behaviour | 30 | `src/cart.js:1`; mục 14-15 | Hàm đã triển khai và review lại; local và CI đúng SHA đều đạt format và 47/47 tests. Review không phát hiện lỗi theo contract. |
+| Tests | 20 | `test/cart.test.js`, `TEST_PLAN.md` mục 3-5 và 10; mục 13-15 | Giữ nguyên 47 tests đã review; tất cả pass trên source thật ở local và CI, không cancelled/skipped/todo. QA tham chiếu/mutation ở mục 13 kiểm chất lượng tests trước triển khai. |
+| Harness | 20 | `AGENTS.md`, `scripts/check-format.js`, `package.json`, `.github/workflows/ci.yml`; mục 10, 11, 14-15 | Gate local exit 0; harness giữ nguyên. CI implementation ở mục 15 đã completed/success; đọc job/log xác nhận format và tests xanh. |
+| Brief | 15 | `BRIEF_HARNESS.md`, `BRIEF_IMPLEMENTATION.md`, `TEST_PLAN.md`; mục 7, 10, 12-15 | Brief và plan được review trước code; triển khai và review/commit/CI theo phạm vi sinh viên giao. |
+| AI-LOG.md | 15 | Các entry ngày 12/10/2026 trong `AI-LOG.md`; mục 3, 11-15 | Log/brief/plan/implementation/tests đã commit/push ở `a42779d`; hồ sơ ghi thêm kết quả CI thực tế ở mục 15. |
 
 Khi hoàn thành bài, cập nhật bảng bằng kết quả cuối cùng và dùng file, section, commit hoặc tên test có thật cho từng dòng Evidence trong báo cáo. Baseline đỏ là bằng chứng trạng thái ban đầu, chưa chứng minh test cuối cùng pass.
 
@@ -55,7 +55,7 @@ Khi hoàn thành bài, cập nhật bảng bằng kết quả cuối cùng và d
 
 ## 5. Phần chưa hoàn thành và điểm cần xác nhận
 
-- Đã triển khai `cartTotal` và đạt gate local với 47/47 tests ở mục 14; bộ tests được review/QA ở mục 13. Rules/checker/workflow đã có, CI cũ xác minh ở mục 11. Chưa tạo `SELF_ASSESSMENT_REPORT.md` đã điền hoặc xác minh CI xanh của implementation mới.
+- Đã triển khai/review `cartTotal`, gate local và CI implementation xanh với 47/47 tests ở mục 14-15; bộ tests được review/QA ở mục 13. Chưa tạo `SELF_ASSESSMENT_REPORT.md` đã điền.
 - Deadline cần xác nhận trên Classroom.
 - Tài liệu chưa xác nhận việc chấp nhận checker format/lint tự viết khi đề ghi no dependencies.
 - Rubric không mô tả dải chênh lệch tự đánh giá từ -11 đến -20; chưa tự suy ra cách điều chỉnh.
@@ -240,4 +240,8 @@ Các ghi nhận dưới đây phản ánh thời điểm soạn/rút gọn bản
 - Ngày: 12/10/2026. Sinh viên giao review hàm, sửa lỗi nếu có, chạy lại gate, commit và xác nhận CI xanh. Đầu bước: HEAD `dcdd05694f4839f9f2d4e01576eca12a954da77e`, nhánh `main`; đã có 5 file tracked thay đổi và 2 file mới từ các bước brief/tests/implementation. Lưu snapshot/hash 14 file ngoài repo trước khi cập nhật hồ sơ, giữ các thay đổi có sẵn.
 - Review toàn bộ `src/cart.js`, 47 tests, README, rules, brief/plan, package, checker và workflow. Không phát hiện lỗi cần sửa theo contract: giỏ rỗng trả trước khi đọc options; mọi item được kiểm giá/qty trước phép nhân và trước nhánh miễn ship; subtotal dùng đủ price/qty; VAT chỉ trên subtotal; ngưỡng dùng `>=` trước VAT/ship; làm tròn một lần ở cuối; input không bị sửa. Không bổ sung hành vi cho input chưa đặc tả.
 - `npm run check` trên repo thật, Node `v24.11.1`, npm `11.6.2`: **format đạt 4 files; 47 tests, 47 pass, 0 fail, 0 cancelled, 0 skipped, 0 todo**, exit **0**. Log tại `C:/Users/vongu/OneDrive/Documents/ChatGPT/IA#1 - Webdev/tmp/cart-final-review-20261012/repository-gate.log`.
-- `git ls-remote origin refs/heads/main` xác nhận remote ở đúng HEAD đầu bước. Commit/push vào fork `nguyenkhoa838/wad-cart-starter`, không vào `upstream`; trạng thái CI sẽ được ghi sau khi kiểm tra run đúng SHA, chưa dùng kết quả CI cũ làm bằng chứng implementation xanh.
+- `git ls-remote origin refs/heads/main` xác nhận remote ở đúng HEAD đầu bước. `git diff --check` và `git diff --cached --check` exit `0`; kiểm newline/whitespace đủ 14 file, đủ sáu trường mỗi entry AI log. So snapshot: source/tests/plan/rules/package/checker/workflow và các file còn lại được bảo toàn; chỉ brief/log/evidence cập nhật trong mốc review trước commit.
+- Commit implementation/tests/hồ sơ: [`a42779d191c2d84fe188141d68daf5ab485e534c`](https://github.com/nguyenkhoa838/wad-cart-starter/commit/a42779d191c2d84fe188141d68daf5ab485e534c), `feat: implement cartTotal with reviewed behaviour tests`, đúng 7 file đã review. `git push origin main` exit `0`, remote từ `dcdd056` tới `a42779d`; working tree sạch sau commit. Chỉ push fork cá nhân, không push `upstream`.
+- [CI — 38252231522](https://github.com/nguyenkhoa838/wad-cart-starter/actions/runs/38252231522): workflow `CI`, event `push`, branch `main`, full `head_sha` trùng commit implementation, status `completed`, conclusion `success`. [Job check — 114821199476](https://github.com/nguyenkhoa838/wad-cart-starter/actions/runs/38252231522/job/114821199476) và các bước checkout/setup-node/format-tests đều `success`.
+- Đã đọc log GitHub: Linux, Node `v24.21.0`, lệnh `npm run check`, `Format check passed (4 files)`, **47 tests, 47 pass, 0 fail, 0 cancelled, 0 skipped, 0 todo**. Đây là CI implementation thật; run đỏ ở mục 11 vẫn giữ làm baseline lịch sử.
+- Snapshot/hash, `precommit-review-results.json`, gate log và `github-ci-38252231522.json/.log/.zip` lưu ngoài repo tại `C:/Users/vongu/OneDrive/Documents/ChatGPT/IA#1 - Webdev/tmp/cart-final-review-20261012/`; không lưu credential. Hồ sơ kết quả này được commit riêng sau run thành công; commit tài liệu tiếp theo cần xác minh CI riêng trước bàn giao.

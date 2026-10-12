@@ -56,8 +56,9 @@ this workflow does not itself block commits or pushes.
 
 `cartTotal` is implemented. The local gate has been verified with format passing
 and all 47 tests passing, including shipping boundaries, rounding, validation,
-and unchanged inputs. CI execution must be confirmed from a run for the pushed
-commit; the workflow file alone is not a completed run.
+and unchanged inputs. [CI passed for implementation commit `a42779d`](https://github.com/nguyenkhoa838/wad-cart-starter/actions/runs/38252231522),
+with the run's full commit SHA verified and its job log confirming all 47 tests
+passed. Further commits need their own successful CI run.
 
 ## What you hand in
 
